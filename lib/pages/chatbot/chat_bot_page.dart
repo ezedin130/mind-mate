@@ -30,10 +30,25 @@ class ChatBotPage extends StatelessWidget {
           const SizedBox(height: 20.0,),
           Padding(
             padding: const EdgeInsets.all(15.0),
-            child: CustomTextField(
-              hint: "Ask Anything",
-              obscure: false,
-              controller: controller,
+            child: Stack(
+              children: [
+                CustomTextField(
+                  hint: "Ask Anything",
+                  obscure: false,
+                  controller: controller,
+                ),
+                Positioned(
+                  right: 8,
+                  top: 8,
+                  bottom: 8,
+                  child: GestureDetector(
+                    child: Icon(
+                      Icons.send,
+                      color: const Color(0xFF1E4957),
+                    ),
+                  ),
+                )
+              ],
             ),
           )
         ],
