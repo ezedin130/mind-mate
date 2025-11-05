@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mindmate/pages/auth/register_page.dart';
-import 'package:mindmate/pages/auth/widget/custom_text_field.dart';
+import 'package:mindmate/util/custom_text_field.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({super.key});
