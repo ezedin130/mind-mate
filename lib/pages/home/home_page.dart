@@ -3,9 +3,25 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:mindmate/util/custom_card_builder.dart';
 import 'package:mindmate/util/custom_circle_builder.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  int _selectedIndex = 0;
+  void _onNavBarPresses(int index){
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
+  static const List<Widget> _screens = <Widget>[
+    HomeSection(),
+    MainGridSection(),
+    ProfileSection()
+  ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -99,45 +115,7 @@ class HomePage extends StatelessWidget {
                   ],
                 ),
                 const SizedBox(height: 30),
-                Expanded(
-                  child: Container(
-                    width: double.infinity,
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 25,
-                      vertical: 30,
-                    ),
-                    decoration: const BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(40),
-                        topRight: Radius.circular(40),
-                      ),
-                    ),
-                    child: GridView.count(
-                      crossAxisCount: 2,
-                      mainAxisSpacing: 20,
-                      crossAxisSpacing: 20,
-                      children: [
-                        CustomCardBuilder(
-                          title: 'Resource',
-                          color: const Color(0xFF4EB3E8),
-                        ),
-                        CustomCardBuilder(
-                          title: 'Chatbot',
-                          color: const Color(0xFF4B7E6E),
-                        ),
-                        CustomCardBuilder(
-                          title: 'Guided Activity',
-                          color: const Color(0xFF556C79),
-                        ),
-                        CustomCardBuilder(
-                          title: 'Mood Tracker',
-                          color: const Color(0xFF6C627D),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
+                _screens.elementAt(_selectedIndex),
               ],
             ),
           ],
@@ -148,13 +126,214 @@ class HomePage extends StatelessWidget {
         selectedItemColor: const Color(0xFF1E4957),
         unselectedItemColor: Colors.grey,
         items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: ''),
-          // BottomNavigationBarItem(
-          //   icon: Icon(Icons.grid_view_rounded),
-          //   label: '',
-          // ),
-          BottomNavigationBarItem(icon: Icon(Icons.person), label: ''),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.home),
+              label: ''),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.grid_view_rounded),
+            label: '',
+          ),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.person),
+              label: ''),
         ],
+        currentIndex: _selectedIndex,
+        onTap: _onNavBarPresses,
+
+      ),
+    );
+  }
+  //
+  // Widget _buildMainGrid() {
+  //   return Expanded(
+  //     child: Container(
+  //       width: double.infinity,
+  //       padding: const EdgeInsets.symmetric(
+  //         horizontal: 25,
+  //         vertical: 30,
+  //       ),
+  //       decoration: const BoxDecoration(
+  //         color: Colors.white,
+  //         borderRadius: BorderRadius.only(
+  //           topLeft: Radius.circular(40),
+  //           topRight: Radius.circular(40),
+  //         ),
+  //       ),
+  //       child: GridView.count(
+  //         crossAxisCount: 2,
+  //         mainAxisSpacing: 20,
+  //         crossAxisSpacing: 20,
+  //         children: const [
+  //           CustomCardBuilder(
+  //             title: 'Resource',
+  //             color: Color(0xFF4EB3E8),
+  //           ),
+  //           CustomCardBuilder(
+  //             title: 'Chatbot',
+  //             color: Color(0xFF4B7E6E),
+  //           ),
+  //           CustomCardBuilder(
+  //             title: 'Guided Activity',
+  //             color: Color(0xFF556C79),
+  //           ),
+  //           CustomCardBuilder(
+  //             title: 'Mood Tracker',
+  //             color: Color(0xFF6C627D),
+  //           ),
+  //         ],
+  //       ),
+  //     ),
+  //   );
+  // }
+  //
+  // Widget _buildHome() {
+  //   return Expanded(
+  //     child: Container(
+  //       width: double.infinity,
+  //       padding: const EdgeInsets.symmetric(
+  //         horizontal: 25,
+  //         vertical: 30,
+  //       ),
+  //       decoration: const BoxDecoration(
+  //         color: Colors.white,
+  //         borderRadius: BorderRadius.only(
+  //           topLeft: Radius.circular(40),
+  //           topRight: Radius.circular(40),
+  //         ),
+  //       ),
+  //       child: Center(child: Text('Home'))
+  //     ),
+  //   );
+  // }
+//
+//   Widget _buildPerson() {
+//     return Expanded(
+//       child: Container(
+//           width: double.infinity,
+//           padding: const EdgeInsets.symmetric(
+//             horizontal: 25,
+//             vertical: 30,
+//           ),
+//           decoration: const BoxDecoration(
+//             color: Colors.white,
+//             borderRadius: BorderRadius.only(
+//               topLeft: Radius.circular(40),
+//               topRight: Radius.circular(40),
+//             ),
+//           ),
+//           child: Center(child: Text('Account'))
+//       ),
+//     );
+//   }
+ }
+class HomeSection extends StatelessWidget {
+  const HomeSection({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Expanded(
+      child: Container(
+        width: double.infinity,
+        padding: const EdgeInsets.symmetric(
+          horizontal: 25,
+          vertical: 30,
+        ),
+        decoration: const BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(40),
+            topRight: Radius.circular(40),
+          ),
+        ),
+        child: const Center(
+          child: Text(
+            'Home',
+            style: TextStyle(
+              fontSize: 24,
+              fontWeight: FontWeight.bold,
+              color: Colors.black87,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+class MainGridSection extends StatelessWidget {
+  const MainGridSection({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Expanded(
+      child: Container(
+        width: double.infinity,
+        padding: const EdgeInsets.symmetric(
+          horizontal: 25,
+          vertical: 30,
+        ),
+        decoration: const BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(40),
+            topRight: Radius.circular(40),
+          ),
+        ),
+        child: GridView.count(
+          crossAxisCount: 2,
+          mainAxisSpacing: 20,
+          crossAxisSpacing: 20,
+          children: const [
+            CustomCardBuilder(
+              title: 'Resource',
+              color: Color(0xFF4EB3E8),
+            ),
+            CustomCardBuilder(
+              title: 'Chatbot',
+              color: Color(0xFF4B7E6E),
+            ),
+            CustomCardBuilder(
+              title: 'Guided Activity',
+              color: Color(0xFF556C79),
+            ),
+            CustomCardBuilder(
+              title: 'Mood Tracker',
+              color: Color(0xFF6C627D),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+class ProfileSection extends StatelessWidget {
+  const ProfileSection({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Expanded(
+      child: Container(
+        width: double.infinity,
+        padding: const EdgeInsets.symmetric(
+          horizontal: 25,
+          vertical: 30,
+        ),
+        decoration: const BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(40),
+            topRight: Radius.circular(40),
+          ),
+        ),
+        child: const Center(
+          child: Text(
+            'Account',
+            style: TextStyle(
+              fontSize: 24,
+              fontWeight: FontWeight.bold,
+              color: Colors.black87,
+            ),
+          ),
+        ),
       ),
     );
   }
