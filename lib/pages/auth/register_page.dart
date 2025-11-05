@@ -47,13 +47,13 @@ class RegisterPage extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  CustomTextField(hint: 'Name', obscure: false),
+                  CustomTextField(hint: 'Name', obscure: false,color: Colors.white,),
                   const SizedBox(height: 15),
-                  CustomTextField(hint: 'Email', obscure: false),
+                  CustomTextField(hint: 'Email', obscure: false,color: Colors.white,),
                   const SizedBox(height: 15),
-                  CustomTextField(hint: 'Password', obscure: true),
+                  CustomTextField(hint: 'Password', obscure: true,color: Colors.white,),
                   const SizedBox(height: 15),
-                  CustomTextField(hint: 'Confirm Password', obscure: true),
+                  CustomTextField(hint: 'Confirm Password', obscure: true,color: Colors.white,),
                   const SizedBox(height: 25),
                   SizedBox(
                     width: double.infinity,

@@ -36,6 +36,7 @@ class ChatBotPage extends StatelessWidget {
                   hint: "Ask Anything",
                   obscure: false,
                   controller: controller,
+                  color: Colors.white,
                 ),
                 Positioned(
                   right: 8,
