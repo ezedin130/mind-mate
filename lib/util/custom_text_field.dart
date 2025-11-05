@@ -6,12 +6,14 @@ class CustomTextField extends StatelessWidget {
     super.key,
     required this.hint,
     required this.obscure,
+    required this.color,
     this.controller
   });
 
   final String hint;
   final bool obscure;
   final TextEditingController? controller;
+  final Color color;
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +22,7 @@ class CustomTextField extends StatelessWidget {
       obscureText: obscure,
       decoration: InputDecoration(
         filled: true,
-        fillColor: Colors.white,
+        fillColor: color,
         hintText: hint,
         hintStyle: GoogleFonts.lato(color: Colors.grey[600]),
         contentPadding: const EdgeInsets.only(right: 48, left: 16, top: 12, bottom: 12),
