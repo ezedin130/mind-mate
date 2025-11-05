@@ -23,10 +23,7 @@ class CustomTextField extends StatelessWidget {
         fillColor: Colors.white,
         hintText: hint,
         hintStyle: GoogleFonts.lato(color: Colors.grey[600]),
-        contentPadding: const EdgeInsets.symmetric(
-          horizontal: 20,
-          vertical: 14,
-        ),
+        contentPadding: const EdgeInsets.only(right: 48, left: 16, top: 12, bottom: 12),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(25),
           borderSide: BorderSide.none,
