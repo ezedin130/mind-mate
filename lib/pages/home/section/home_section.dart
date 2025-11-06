@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:mindmate/pages/activity/suggested_activity_page.dart';
+import 'package:mindmate/pages/resource/suggested_resource_page.dart';
 import 'package:mindmate/util/custom_text_field.dart';
+import '../../../util/reusable_container.dart';
 
 class HomeSection extends StatelessWidget {
   const HomeSection({super.key});
@@ -23,69 +25,37 @@ class HomeSection extends StatelessWidget {
         ),
         child: SingleChildScrollView(
           child: Column(
-            //mainAxisAlignment: MainAxisAlignment.center,
             children: [
               CustomTextField(hint: "search...", obscure: false,color: Colors.lightBlueAccent,),
               const SizedBox(height: 10.0,),
               ReUsableContainer(
                 image: 'lib/assets/exercise.png',
                 title: 'Suggested Exercise',
+                onTap: (){
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) =>
+                              SuggestedActivityPage()
+                      ),
+                  );
+                },
               ),
               const SizedBox(height: 10.0,),
               ReUsableContainer(
                 image: 'lib/assets/resource.png',
                 title: 'Suggested resource',
+                onTap: (){
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) =>
+                            SuggestedResourcePage()
+                    ),
+                  );
+                },
               ),
-              // const SizedBox(height: 10.0,),
-              // Container(
-              //   height: 300,
-              //   width: 300,
-              //   decoration: BoxDecoration(
-              //     color: const Color(0xFF1E4957),
-              //     borderRadius: BorderRadius.circular(20),
-              //   ),
-              // ),
             ],
-          ),
-        )
-      ),
-    );
-  }
-}
-
-class ReUsableContainer extends StatelessWidget {
-  const ReUsableContainer({
-    super.key,
-    required this.image,
-    required this.title
-  });
-  final String image;
-  final String title;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      height: 300,
-      width: double.infinity,
-      decoration: BoxDecoration(
-        image: DecorationImage(
-            image: AssetImage(image),
-          fit: BoxFit.cover,
-          alignment: Alignment.center
-        ),
-        borderRadius: BorderRadius.circular(30),
-      ),
-      child: Align(
-        alignment: Alignment.bottomCenter,
-        child:Padding(
-          padding: const EdgeInsets.only(bottom: 8.0),
-          child: Text(
-            title,
-            style: GoogleFonts.lato(
-              fontSize: 24,
-              fontWeight: FontWeight.bold,
-              color: Colors.black,
-            ),
           ),
         )
       ),
