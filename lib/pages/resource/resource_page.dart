@@ -7,6 +7,10 @@ class ResourcePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color(0xFF1E4957),
+      appBar: AppBar(
+        backgroundColor: const Color(0xFF1E4957),
+      ),
       body: Center(
         child: Text(
           'Resources',
