@@ -1,10 +1,14 @@
+import 'dart:async';
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mindmate/pages/home/section/home_section.dart';
 import 'package:mindmate/pages/home/section/main_grid_section.dart';
 import 'package:mindmate/pages/home/section/profile_section.dart';
-import 'package:mindmate/util/custom_card_builder.dart';
 import 'package:mindmate/util/custom_circle_builder.dart';
+
+import '../../data/quotes.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -15,6 +19,30 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   int _selectedIndex = 0;
+  String currentQuote = "";
+  Timer? _timer;
+  @override
+  void initState() {
+    super.initState();
+    _getRandomQuote();
+    _timer = Timer.periodic(const Duration(minutes: 5), (timer) {
+      _getRandomQuote();
+    });
+  }
+
+  void _getRandomQuote() {
+    final random = Random();
+    setState(() {
+      currentQuote = mentalHealthQuotes[random.nextInt(mentalHealthQuotes.length)];
+    });
+  }
+
+  @override
+  void dispose() {
+    _timer?.cancel();
+    super.dispose();
+  }
+
   void _onNavBarPresses(int index){
     setState(() {
       _selectedIndex = index;
@@ -25,6 +53,8 @@ class _HomePageState extends State<HomePage> {
     MainGridSection(),
     ProfileSection()
   ];
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -38,7 +68,7 @@ class _HomePageState extends State<HomePage> {
               child: CustomCircleBuilder(size: 100),
             ),
             Positioned(
-              top: 160,
+              top: 100,
               left: -40,
               child: CustomCircleBuilder(size: 80),
             ),
@@ -59,11 +89,6 @@ class _HomePageState extends State<HomePage> {
                     children: [
                       Row(
                         children: [
-                          // Image.asset(
-                          //   'assets/mindmate_logo.png', // <-- replace with your logo asset
-                          //   height: 40,
-                          // ),
-                          //const SizedBox(width: 8),
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -108,11 +133,17 @@ class _HomePageState extends State<HomePage> {
                       ),
                     ),
                     const SizedBox(height: 6),
-                    Text(
-                      '"Your mind matters." 😊🥰',
-                      style: GoogleFonts.lato(
-                        color: Colors.white,
-                        fontSize: 14,
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: AnimatedSwitcher(
+                        duration: const Duration(seconds: 600),
+                        child: Text(
+                          '"$currentQuote" 😊🥰',
+                          style: GoogleFonts.lato(
+                            color: Colors.white,
+                            fontSize: 14,
+                          ),
+                        ),
                       ),
                     ),
                   ],
@@ -131,14 +162,14 @@ class _HomePageState extends State<HomePage> {
         items: const [
           BottomNavigationBarItem(
               icon: Icon(Icons.home),
-              label: ''),
+              label: 'Home'),
           BottomNavigationBarItem(
             icon: Icon(Icons.grid_view_rounded),
-            label: '',
+            label: 'Dashboard',
           ),
           BottomNavigationBarItem(
               icon: Icon(Icons.person),
-              label: ''),
+              label: 'Profile'),
         ],
         currentIndex: _selectedIndex,
         onTap: _onNavBarPresses,
