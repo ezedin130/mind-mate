@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+
+import '../../../util/custom_info_tile.dart';
+import '../../../util/reusable_profile_option.dart';
 
 class ProfileSection extends StatelessWidget {
   const ProfileSection({super.key});
@@ -20,15 +22,30 @@ class ProfileSection extends StatelessWidget {
             topRight: Radius.circular(40),
           ),
         ),
-        child: Center(
-          child: Text(
-            'Account',
-            style: GoogleFonts.lato(
-              fontSize: 24,
-              fontWeight: FontWeight.bold,
-              color: Colors.black87,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                CustomInfoTile(icon: Icons.mood, label: 'Mood Entries', value: '24', color: Colors.lightBlueAccent),
+                CustomInfoTile(icon: Icons.chat_bubble_outline, label: 'AI Chats', value: '132', color: Colors.teal),
+                CustomInfoTile(icon: Icons.local_fire_department, label: 'Streak', value: '7 Days', color: Colors.red),
+              ],
             ),
-          ),
+            const SizedBox(height: 30),
+            Expanded(
+              child: ListView(
+                children: [
+                  ReUsableProfileOption(icon: Icons.edit, title: 'Edit Profile', onTap: () {}),
+                  ReUsableProfileOption(icon: Icons.settings, title: 'Settings', onTap: () {}),
+                  ReUsableProfileOption(icon: Icons.lock, title: 'Change Password', onTap: () {}),
+                  ReUsableProfileOption(icon: Icons.help, title: 'Help & Support', onTap: () {}),
+                  ReUsableProfileOption(icon: Icons.logout, title: 'Log Out', onTap: () {}),
+                ],
+              ),
+            ),
+          ],
         ),
       ),
     );
