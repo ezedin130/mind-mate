@@ -25,13 +25,28 @@ class ProfileSection extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                CustomInfoTile(icon: Icons.mood, label: 'Mood Entries', value: '24', color: Colors.lightBlueAccent),
-                CustomInfoTile(icon: Icons.chat_bubble_outline, label: 'AI Chats', value: '132', color: Colors.teal),
-                CustomInfoTile(icon: Icons.local_fire_department, label: 'Streak', value: '7 Days', color: Colors.red),
-              ],
+            Container(
+              width: double.infinity,
+              padding: EdgeInsets.symmetric(vertical: 18, horizontal: 10),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(20),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black12,
+                    blurRadius: 8,
+                    offset: Offset(0, 4),
+                  ),
+                ],
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  CustomInfoTile(icon: Icons.mood, label: 'Mood Entries', value: '24', color: Colors.lightBlueAccent),
+                  CustomInfoTile(icon: Icons.chat_bubble_outline, label: 'AI Chats', value: '132', color: Colors.teal),
+                  CustomInfoTile(icon: Icons.local_fire_department, label: 'Streak', value: '7 Days', color: Colors.red),
+                ],
+              ),
             ),
             const SizedBox(height: 30),
             Expanded(
