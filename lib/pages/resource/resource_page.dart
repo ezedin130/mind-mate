@@ -41,25 +41,41 @@ class ResourcePage extends StatelessWidget {
           children: [
             ReUsableContainer(
                 context: context,
-                icon: Icons.air_outlined,
-                title: "Breathing Exercise",
-                subtitle: "calm your mind with guided breathing",
+                icon: Icons.cached,
+                title: "Understanding anxiety",
+                subtitle: "mental health",
+                color: Colors.blueAccent, onTap: () {}
+            ),
+            const SizedBox(height: 10.0,),
+            ReUsableContainer(
+                context: context,
+                icon: Icons.balance,
+                title: "Building healthy habits",
+                subtitle: "wellness",
                 color: Colors.blueAccent, onTap: () {}
             ),
             const SizedBox(height: 10.0,),
             ReUsableContainer(
                 context: context,
                 icon: Icons.self_improvement,
-                title: "Meditation",
-                subtitle: "find peace in the present moment",
+                title: "Mindfulness in daily life",
+                subtitle: "Mindfulness",
                 color: Colors.blueAccent, onTap: () {}
             ),
             const SizedBox(height: 10.0,),
             ReUsableContainer(
                 context: context,
-                icon: Icons.headset,
-                title: "Sleep Sounds",
-                subtitle: "relaxing sounds for better sleep",
+                icon: Icons.cloud_queue,
+                title: "What really is depression?",
+                subtitle: "depression",
+                color: Colors.blueAccent, onTap: () {}
+            ),
+            const SizedBox(height: 10.0,),
+            ReUsableContainer(
+                context: context,
+                icon: Icons.flash_on,
+                title: "Understanding stress",
+                subtitle: "stress",
                 color: Colors.blueAccent, onTap: () {}
             ),
             const SizedBox(height: 20.0,),
@@ -82,14 +98,14 @@ class ResourcePage extends StatelessWidget {
                 Row(
                   children: [
                     Icon(
-                        Icons.favorite,
+                        Icons.help,
                         color: Colors.white,
                     ),
                     SizedBox(width: 8),
                     Text(
-                      "Daily Tip",
+                      "Need Immediate Help?",
                       style: GoogleFonts.lato(
-                        color: Colors.white,
+                        color: Colors.red,
                         fontWeight: FontWeight.bold,
                         fontSize: 18,
                       ),
@@ -98,15 +114,34 @@ class ResourcePage extends StatelessWidget {
                 ),
                 SizedBox(height: 12),
                 Text(
-                  '"Take three deep breaths before responding to stress. '
-                      'This simple pause can help you respond thoughtfully '
-                      'rather than react emotionally."',
+                  '"If you are in crisis '
+                      'Please reach out to '
+                      'professional helpline"',
                   style: GoogleFonts.lato(
                     color: Colors.white,
                     fontSize: 14,
+                    fontWeight: FontWeight.bold,
                     height: 1.4,
                   ),
                 ),
+                SizedBox(height: 12),
+                ElevatedButton(
+                    onPressed: (){},
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.red,
+                    foregroundColor: Colors.black,
+
+                  ),
+                    child: Text(
+                      'View Crisis Resources',
+                        style: GoogleFonts.lato(
+                          color: Colors.white,
+                          fontSize: 14,
+                          fontWeight: FontWeight.bold,
+                          height: 1.4,
+                        )
+                    ),
+                )
               ],
             ),
           ),
