@@ -3,8 +3,13 @@ import 'package:google_fonts/google_fonts.dart';
 
 import '../../../../../util/color_utils.dart';
 
-class QuickMoodContent extends StatelessWidget {
-  const QuickMoodContent({super.key});
+class QuickMoodContent extends StatefulWidget {
+  @override
+  State<QuickMoodContent> createState() => _QuickMoodContentState();
+}
+
+class _QuickMoodContentState extends State<QuickMoodContent> {
+  String? _selectedMood;
 
   @override
   Widget build(BuildContext context) {
@@ -16,64 +21,107 @@ class QuickMoodContent extends StatelessWidget {
       ],
     );
   }
+
   Widget _buildMoodSelection() {
     return Padding(
       padding: const EdgeInsets.all(24.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            "Select Your Mood",
-            style: GoogleFonts.lato(
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-              color: Colors.black87,
+          Container(
+            padding: EdgeInsets.all(16),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(20),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.grey,
+                  blurRadius: 10,
+                  offset: const Offset(0, 4),
+                ),
+              ],
+            ),
+            child: Column(
+              children: [
+                Text(
+                  "Select Your Mood",
+                  style: GoogleFonts.lato(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black87,
+                  ),
+                ),
+                const SizedBox(height: 16),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    _buildMoodOption("Great", "😊"),
+                    _buildMoodOption("Good", "🙂"),
+                    _buildMoodOption("Okay", "😐"),
+                    _buildMoodOption("Sad", "😔"),
+                    _buildMoodOption("Stressed", "😫"),
+                  ],
+                ),
+                const SizedBox(height: 20),
+                if (_selectedMood != null)
+                  Center(
+                    child: ElevatedButton(
+                      onPressed: () {
+                        // todo: Handle mood submission
+                        setState(() {
+                          _selectedMood = null;
+                        });
+                      },
+                      child: Text("Confirm Mood"),
+                    ),
+                  ),
+              ],
             ),
           ),
-          const SizedBox(height: 16),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              _buildMoodOption("Great", "😊"),
-              _buildMoodOption("Good", "🙂"),
-              _buildMoodOption("Okay", "😐"),
-              _buildMoodOption("Sad", "😔"),
-              _buildMoodOption("Stressed", "😫"),
-            ],
+
+        ],
+      ),
+    );
+  }
+
+//quick mood
+  Widget _buildMoodOption(String label, String emoji) {
+    bool isSelected = _selectedMood == label;
+    return GestureDetector(
+      onTap: () {
+        setState(() {
+          _selectedMood = label;
+        });
+      },
+      child: Column(
+        children: [
+          Container(
+            width: 50,
+            height: 50,
+            decoration: BoxDecoration(
+              color: isSelected ? Colors.blue : Colors.grey[100],
+              borderRadius: BorderRadius.circular(12),
+            ),
+            child: Center(
+              child: Text(
+                emoji,
+                style: const TextStyle(fontSize: 24),
+              ),
+            ),
+          ),
+          const SizedBox(height: 8),
+          Text(
+            label,
+            style: GoogleFonts.lato(
+              fontSize: 12,
+              color: Colors.black54,
+            ),
           ),
         ],
       ),
     );
   }
-//quick mood
-  Widget _buildMoodOption(String label, String emoji) {
-    return Column(
-      children: [
-        Container(
-          width: 50,
-          height: 50,
-          decoration: BoxDecoration(
-            color: Colors.grey[100],
-            borderRadius: BorderRadius.circular(12),
-          ),
-          child: Center(
-            child: Text(
-              emoji,
-              style: const TextStyle(fontSize: 24),
-            ),
-          ),
-        ),
-        const SizedBox(height: 8),
-        Text(
-          label,
-          style: GoogleFonts.lato(
-            fontSize: 12,
-            color: Colors.black54,
-          ),
-        ),
-      ],
-    );
-  }
+
 //quick mood
   Widget _buildWeeklyInsights() {
     return Container(
@@ -109,6 +157,7 @@ class QuickMoodContent extends StatelessWidget {
       ),
     );
   }
+
 //quick mood
   Widget _buildInsightItem(String title, String value) {
     return Column(
@@ -133,6 +182,7 @@ class QuickMoodContent extends StatelessWidget {
       ],
     );
   }
+
 //quick mood
   Widget _buildRecentCheckins() {
     return Padding(
@@ -164,6 +214,7 @@ class QuickMoodContent extends StatelessWidget {
       ),
     );
   }
+
 //quick mood
   Widget _buildCheckinItem(String day, String mood) {
     return Container(
