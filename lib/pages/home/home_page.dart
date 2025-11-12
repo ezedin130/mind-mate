@@ -165,7 +165,7 @@ class _HomePageState extends State<HomePage> {
               label: 'Home'),
           BottomNavigationBarItem(
             icon: Icon(Icons.grid_view_rounded),
-            label: 'Dashboard',
+            label: 'Explore',
           ),
           BottomNavigationBarItem(
               icon: Icon(Icons.person),
