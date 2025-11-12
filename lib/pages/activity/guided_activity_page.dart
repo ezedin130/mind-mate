@@ -24,7 +24,7 @@ class GuidedActivityPage extends StatelessWidget {
             ),
             const SizedBox(height: 5.0,),
             Text(
-              'Tools to support your wellbeing',
+              'activities to support your wellbeing',
               style: GoogleFonts.lato(
                 fontSize: 15,
                 fontWeight: FontWeight.bold,
