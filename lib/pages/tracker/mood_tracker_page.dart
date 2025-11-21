@@ -1,146 +1,96 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:mindmate/pages/tracker/pages/mood_history_page.dart';
-import '../home/home_page.dart';
-import 'pages/mood_questionnaire_page.dart';
+import 'package:mindmate/pages/tracker/pages/components/section/header.dart';
+import 'package:mindmate/pages/tracker/pages/components/section/main_content.dart';
 
-class MoodTrackerPage extends StatelessWidget {
+class MoodTrackerPage extends StatefulWidget {
   const MoodTrackerPage({super.key});
 
   @override
+  State<MoodTrackerPage> createState() => _MoodTrackerPageState();
+}
+
+class _MoodTrackerPageState extends State<MoodTrackerPage> {
+  int _selectedIndex = 0;
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: const Color(0xFF1E4957),
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
-          onPressed: () {
-            Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(builder: (_) => const HomePage()),
-            );
-          },
+      backgroundColor: const Color(0xFF1E4957),
+      body: SafeArea(
+        child: Column(
+          children: [
+            Header(context: context),
+            _buildNavigationTabs(),
+            const SizedBox(height: 10.0,),
+            Expanded(
+              child: MainContent(selectedIndex: _selectedIndex),
+            ),
+          ],
         ),
       ),
-      body: Container(
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            colors: [Color(0xFF1E4957), Color(0xFF0D1C26)],
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
+    );
+  }
+//app bar
+//nav
+  Widget _buildNavigationTabs() {
+    return Padding(
+      padding: const EdgeInsets.all(15.0),
+      child: Container(
+        decoration: BoxDecoration(
+          color: const Color(0xFF1E4957),
+          borderRadius: BorderRadius.circular(20),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.white.withOpacity(0.2),
+              blurRadius: 10,
+              offset: const Offset(0, 4),
+            ),
+          ],
+        ),
+        child: Row(
+          children: [
+            _buildNavItem("Quick Mood", 0),
+            _buildNavItem("CBT Journal", 1),
+            _buildNavItem("CBT Question", 2),
+          ],
+        ),
+      ),
+    );
+  }
+//nav
+  Widget _buildNavItem(String title, int index) {
+    bool isSelected = _selectedIndex == index;
+    return Expanded(
+      child: Container(
+        width: isSelected ? 2 : 1,
+        decoration: BoxDecoration(
+          color: isSelected ? Colors.blue : Colors.transparent,
+          borderRadius: BorderRadius.circular(20),
+          border: Border(
+            bottom: BorderSide(
+              color: Colors.white.withOpacity(0.3),
+              width: 1,
+            ),
           ),
         ),
-        child: SafeArea(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 24.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  "Mood Tracker",
-                  style: GoogleFonts.lato(
-                    fontSize: 34,
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                    letterSpacing: 1.2,
-                  ),
-                  textAlign: TextAlign.center,
-                ),
-                const SizedBox(height: 16),
-                Text(
-                  "Understand your emotions and get CBT-based insights to feel better each day.",
-                  style: GoogleFonts.lato(
-                    fontSize: 18,
-                    color: Colors.white70,
-                    height: 1.4,
-                  ),
-                  textAlign: TextAlign.center,
-                ),
-                const SizedBox(height: 50),
-                Container(
-                  padding: const EdgeInsets.all(24),
-                  decoration: BoxDecoration(
-                    color: Colors.white.withOpacity(0.08),
-                    borderRadius: BorderRadius.circular(24),
-                    border: Border.all(color: Colors.white24),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withOpacity(0.3),
-                        blurRadius: 12,
-                        offset: const Offset(0, 6),
-                      ),
-                    ],
-                  ),
-                  child: Column(
-                    children: [
-                      ElevatedButton.icon(
-                        icon: const Icon(Icons.sentiment_satisfied_alt, size: 26),
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.tealAccent.withOpacity(0.25),
-                          elevation: 5,
-                          minimumSize: const Size(double.infinity, 55),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(16),
-                            side: const BorderSide(color: Colors.white24),
-                          ),
-                        ),
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (_) => const MoodQuestionnairePage()),
-                          );
-                        },
-                        label: Text(
-                          "Start Mood Check",
-                          style: GoogleFonts.lato(
-                            fontSize: 20,
-                            fontWeight: FontWeight.w600,
-                            color: Colors.white,
-                          ),
-                        ),
-                      ),
-                      const SizedBox(height: 20),
-                      ElevatedButton.icon(
-                        icon: const Icon(Icons.bar_chart, size: 26),
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.blueGrey.withOpacity(0.25),
-                          elevation: 5,
-                          minimumSize: const Size(double.infinity, 55),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(16),
-                            side: const BorderSide(color: Colors.white24),
-                          ),
-                        ),
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (_) => const MoodHistoryPage()),
-                          );
-                        },
-                        label: Text(
-                          "View Mood History",
-                          style: GoogleFonts.lato(
-                            fontSize: 20,
-                            fontWeight: FontWeight.w600,
-                            color: Colors.white,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                const SizedBox(height: 50),
-                Text(
-                  "“Your feelings are valid. Take one small step toward calm.”",
-                  style: GoogleFonts.lato(
-                    fontSize: 16,
-                    color: Colors.white60,
-                    fontStyle: FontStyle.italic,
-                  ),
-                  textAlign: TextAlign.center,
-                ),
-              ],
+        child: TextButton(
+          onPressed: () {
+            setState(() {
+              _selectedIndex = index;
+            });
+          },
+          style: TextButton.styleFrom(
+            padding: const EdgeInsets.symmetric(vertical: 16),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.zero,
+            ),
+          ),
+          child: Text(
+            title,
+            style: GoogleFonts.lato(
+              fontSize: 16,
+              color: Colors.white,
+              fontWeight: FontWeight.w500,
             ),
           ),
         ),

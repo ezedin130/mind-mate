@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import '../model/mood_question.dart';
+import '../../model/mood_question.dart';
 import 'mood_result_page.dart';
 
 class MoodQuestionnairePage extends StatefulWidget {
