@@ -3,7 +3,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:mindmate/pages/home/section/home_section.dart';
 import 'package:mindmate/pages/home/section/main_grid_section.dart';
 import 'package:mindmate/pages/home/section/profile_section.dart';
-import 'package:mindmate/util/custom_card_builder.dart';
 import 'package:mindmate/util/custom_circle_builder.dart';
 
 class HomePage extends StatefulWidget {
