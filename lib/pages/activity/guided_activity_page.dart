@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:mindmate/pages/activity/pages/breathing_exercise_page.dart';
+import 'package:mindmate/pages/activity/pages/meditation_page.dart';
+import 'package:mindmate/pages/activity/pages/sleeping_sound_page.dart';
 
 import '../../util/reusable_container.dart';
 
@@ -15,7 +18,7 @@ class GuidedActivityPage extends StatelessWidget {
         title: Column(
           children: [
             Text(
-              'Resources',
+              'Activities',
               style: GoogleFonts.lato(
                 fontSize: 24,
                 fontWeight: FontWeight.bold,
@@ -44,7 +47,9 @@ class GuidedActivityPage extends StatelessWidget {
                 icon: Icons.air_outlined,
                 title: "Breathing Exercise",
                 subtitle: "calm your mind with guided breathing",
-                color: Colors.blueAccent, onTap: () {}
+                color: Colors.blueAccent, onTap: () {
+              Navigator.push(context, MaterialPageRoute(builder: (context)=> BreathingExercisePage()));
+            }
             ),
             const SizedBox(height: 10.0,),
             ReUsableContainer(
@@ -52,7 +57,9 @@ class GuidedActivityPage extends StatelessWidget {
                 icon: Icons.self_improvement,
                 title: "Meditation",
                 subtitle: "find peace in the present moment",
-                color: Colors.blueAccent, onTap: () {}
+                color: Colors.blueAccent, onTap: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context)=> MeditationPage()));
+            }
             ),
             const SizedBox(height: 10.0,),
             ReUsableContainer(
@@ -60,7 +67,9 @@ class GuidedActivityPage extends StatelessWidget {
                 icon: Icons.headset,
                 title: "Sleep Sounds",
                 subtitle: "relaxing sounds for better sleep",
-                color: Colors.blueAccent, onTap: () {}
+                color: Colors.blueAccent, onTap: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context)=> SleepingSoundPage()));
+            }
             ),
             const SizedBox(height: 20.0,),
             Center(
