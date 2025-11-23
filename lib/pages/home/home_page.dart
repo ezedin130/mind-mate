@@ -1,12 +1,13 @@
 import 'dart:async';
 import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:mindmate/pages/home/section/home_section.dart';
 import 'package:mindmate/pages/home/section/main_grid_section.dart';
 import 'package:mindmate/pages/home/section/profile_section.dart';
 import 'package:mindmate/util/custom_circle_builder.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../data/quotes.dart';
 
@@ -18,6 +19,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  String name = "";
   int _selectedIndex = 0;
   String currentQuote = "";
   Timer? _timer;
@@ -27,6 +29,21 @@ class _HomePageState extends State<HomePage> {
     _getRandomQuote();
     _timer = Timer.periodic(const Duration(minutes: 5), (timer) {
       _getRandomQuote();
+    });
+    loadNameFromToken();
+  }
+  Future<String> getUserNameFromToken() async {
+    final prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString("token");
+    if (token == null) return "User";
+
+    final decodedToken = JwtDecoder.decode(token);
+    return decodedToken['name'] ?? "User";
+  }
+  void loadNameFromToken() async {
+    final userName = await getUserNameFromToken();
+    setState(() {
+      name = userName;
     });
   }
 
@@ -125,7 +142,7 @@ class _HomePageState extends State<HomePage> {
                     ),
                     const SizedBox(height: 10),
                     Text(
-                      'Wade Warren',
+                      name,
                       style: GoogleFonts.lato(
                         color: Colors.white,
                         fontWeight: FontWeight.bold,
