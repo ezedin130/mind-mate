@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mindmate/pages/tracker/pages/components/section/header.dart';
 import 'package:mindmate/pages/tracker/pages/components/section/main_content.dart';
+import 'package:mindmate/service/mood_service.dart';
 
 class MoodTrackerPage extends StatefulWidget {
   const MoodTrackerPage({super.key});
@@ -50,7 +51,6 @@ class _MoodTrackerPageState extends State<MoodTrackerPage> {
         child: Row(
           children: [
             _buildNavItem("Quick Mood", 0),
-            _buildNavItem("CBT Journal", 1),
             _buildNavItem("CBT Question", 2),
           ],
         ),

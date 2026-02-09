@@ -1,7 +1,5 @@
-
 import 'package:flutter/material.dart';
 
-import 'cbt_journal.dart';
 import 'cbt_question.dart';
 import 'quick_mood_content.dart';
 
@@ -27,7 +25,6 @@ class MainContent extends StatelessWidget {
         child: Column(
           children: [
             if (_selectedIndex == 0) QuickMoodContent(),
-            if (_selectedIndex == 1) const CbtJournal(),
             if (_selectedIndex == 2) const CbtQuestion(),
           ],
         ),

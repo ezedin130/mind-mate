@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:mindmate/auth_service.dart';
 import 'package:mindmate/pages/auth/register_page.dart';
 import 'package:mindmate/pages/home/home_page.dart';
 import 'package:mindmate/util/custom_text_field.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+
+import '../../controller/auth_controller.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({super.key});
@@ -12,7 +12,6 @@ class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final formKey = GlobalKey<FormState>();
-    final authService = AuthService();
     final emailController = TextEditingController();
     final passwordController = TextEditingController();
 
@@ -99,22 +98,19 @@ class LoginPage extends StatelessWidget {
                           elevation: 3,
                         ),
                         onPressed: () async{
+                          final authController = AuthController();
                           if (formKey.currentState!.validate()) {
-                            final result = await authService.loginUser(
+                            final result = await authController.loginUser(
                               emailController.text,
                               passwordController.text,
                             );
-                            final prefs = await SharedPreferences.getInstance();
-                            await prefs.setString("token", result["token"]);
-
                             ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(content: Text(result["message"])),
+                              SnackBar(content: Text(result.message)),
                             );
-
-                            if (result["success"]) {
+                            if (result.success) {
                               Navigator.pushReplacement(
                                 context,
-                                MaterialPageRoute(builder: (context) => const HomePage()),
+                                MaterialPageRoute(builder: (_) => const HomePage()),
                               );
                             }
                           }

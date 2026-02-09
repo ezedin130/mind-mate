@@ -65,7 +65,7 @@ class _HomePageState extends State<HomePage> {
       _selectedIndex = index;
     });
   }
-  static const List<Widget> _screens = <Widget>[
+  static final List<Widget> _screens = <Widget>[
     HomeSection(),
     MainGridSection(),
     ProfileSection()

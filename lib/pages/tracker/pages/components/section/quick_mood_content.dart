@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:jwt_decoder/jwt_decoder.dart';
+import 'package:mindmate/controller/mood_controller.dart';
+import 'package:mindmate/service/mood_service.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../../../util/color_utils.dart';
 
@@ -10,6 +14,41 @@ class QuickMoodContent extends StatefulWidget {
 
 class _QuickMoodContentState extends State<QuickMoodContent> {
   String? _selectedMood;
+  String? _userId;
+  int? _streak;
+  String? _averageMood;
+  bool _loadingInsights = true;
+  final moodController = MoodController();
+
+  @override
+  void initState() {
+    super.initState();
+    _loadUserIdAndInsights();
+  }
+
+  Future<void> _loadUserIdAndInsights() async {
+    final prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString("token");
+    if (token != null) {
+      final decodedToken = JwtDecoder.decode(token);
+      final userId = decodedToken['_id'];
+
+      setState(() {
+        _userId = userId;
+      });
+      final streak = await moodController.getStreak(userId);
+      final average = await moodController.getWeeklyAverage(userId);
+      final averageMoodString = moodController.mapScoreToMood(average.averageScore);
+
+      setState(() {
+        _streak = streak.streak;
+        _averageMood = averageMoodString;
+        _loadingInsights = false;
+      });
+    }
+  }
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +56,6 @@ class _QuickMoodContentState extends State<QuickMoodContent> {
       children: [
         _buildMoodSelection(),
         _buildWeeklyInsights(),
-        _buildRecentCheckins(),
       ],
     );
   }
@@ -63,15 +101,22 @@ class _QuickMoodContentState extends State<QuickMoodContent> {
                   ],
                 ),
                 const SizedBox(height: 20),
-                if (_selectedMood != null)
                   Center(
                     child: ElevatedButton(
-                      onPressed: () {
-                        // todo: Handle mood submission
-                        setState(() {
-                          _selectedMood = null;
-                        });
-                      },
+                      onPressed: (_selectedMood != null && _userId != null)
+                        ?() async {
+                        final result =
+                        await moodController.submitMood(_userId!, _selectedMood!);
+
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(content: Text(result.message)),
+                        );
+
+                        if (result.success) {
+                          setState(() => _selectedMood = null);
+                        }
+                      }
+                      :null,
                       child: Text("Confirm Mood"),
                     ),
                   ),
@@ -143,13 +188,21 @@ class _QuickMoodContentState extends State<QuickMoodContent> {
             ),
           ),
           const SizedBox(height: 12),
-          Row(
+          _loadingInsights
+              ? const Center(child: CircularProgressIndicator())
+              : Row(
             children: [
               Expanded(
-                child: _buildInsightItem("Average Mood", "Good"),
+                child: _buildInsightItem(
+                  "Average Mood",
+                  _averageMood ?? "N/A",
+                ),
               ),
               Expanded(
-                child: _buildInsightItem("Check-in Streak", "5 days"),
+                child: _buildInsightItem(
+                  "Check-in Streak",
+                  _streak != null ? "$_streak days" : "N/A",
+                ),
               ),
             ],
           ),
@@ -183,76 +236,5 @@ class _QuickMoodContentState extends State<QuickMoodContent> {
     );
   }
 
-//quick mood
-  Widget _buildRecentCheckins() {
-    return Padding(
-      padding: const EdgeInsets.all(24.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            "Recent Check-ins",
-            style: GoogleFonts.lato(
-              fontSize: 18,
-              fontWeight: FontWeight.bold,
-              color: Colors.black87,
-            ),
-          ),
-          const SizedBox(height: 16),
-          ListView(
-            shrinkWrap: true,
-            physics: NeverScrollableScrollPhysics(),
-            children: [
-              _buildCheckinItem("Today", "Good"),
-              _buildCheckinItem("Yesterday", "Great"),
-              _buildCheckinItem("Nov 9", "Okay"),
-              _buildCheckinItem("Nov 8", "Good"),
-              _buildCheckinItem("Nov 7", "Great"),
-            ],
-          ),
-        ],
-      ),
-    );
-  }
 
-//quick mood
-  Widget _buildCheckinItem(String day, String mood) {
-    return Container(
-      margin: const EdgeInsets.only(bottom: 12),
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: Colors.grey[50],
-        borderRadius: BorderRadius.circular(8),
-        border: Border.all(color: Colors.grey[200]!),
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Text(
-            day,
-            style: GoogleFonts.lato(
-              fontSize: 16,
-              fontWeight: FontWeight.w500,
-              color: Colors.black87,
-            ),
-          ),
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
-            decoration: BoxDecoration(
-              color: getMoodColor(mood),
-              borderRadius: BorderRadius.circular(16),
-            ),
-            child: Text(
-              mood,
-              style: GoogleFonts.lato(
-                fontSize: 14,
-                color: Colors.white,
-                fontWeight: FontWeight.w500,
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
 }

@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:mindmate/auth_service.dart';
 import 'package:mindmate/pages/auth/login_page.dart';
 import 'package:mindmate/util/custom_text_field.dart';
+
+import '../../controller/auth_controller.dart';
 
 class RegisterPage extends StatelessWidget {
   const RegisterPage({super.key});
@@ -10,7 +11,6 @@ class RegisterPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final formKey = GlobalKey<FormState>();
-    final authService = AuthService();
     final nameController = TextEditingController();
     final emailController = TextEditingController();
     final passwordController = TextEditingController();
@@ -122,21 +122,22 @@ class RegisterPage extends StatelessWidget {
                           elevation: 3,
                         ),
                         onPressed: () async{
+                          final authController = AuthController();
                           if (formKey.currentState!.validate()) {
-                            String responseMessage = await authService.registerUser(
+                            final result = await authController.registerUser(
                               nameController.text,
                               emailController.text,
                               passwordController.text,
                             );
 
                             ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(content: Text(responseMessage)),
+                              SnackBar(content: Text(result.message)),
                             );
 
-                            if (responseMessage == "User Registered") {
-                              Navigator.push(
+                            if (result.success) {
+                              Navigator.pushReplacement(
                                 context,
-                                MaterialPageRoute(builder: (context) => const LoginPage()),
+                                MaterialPageRoute(builder: (_) => const LoginPage()),
                               );
                             }
                           }
