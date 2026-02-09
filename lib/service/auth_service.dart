@@ -5,7 +5,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../model/auth_response.dart';
 
 class AuthService {
-  final String baseUrl = "http://10.172.37.122:3000";
+  final String baseUrl = "http://10.172.37.40:3000";
 
   Future<AuthResponse> register({
     required String name,
@@ -16,11 +16,7 @@ class AuthService {
       final response = await http.post(
         Uri.parse("$baseUrl/api/register"),
         headers: {"Content-Type": "application/json"},
-        body: jsonEncode({
-          "name": name,
-          "email": email,
-          "password": password,
-        }),
+        body: jsonEncode({"name": name, "email": email, "password": password}),
       );
 
       final data = jsonDecode(response.body);
@@ -32,12 +28,8 @@ class AuthService {
       }
     } catch (e) {
       print("AUTH ERROR: $e");
-      return AuthResponse(
-        success: false,
-        message: e.toString(),
-      );
+      return AuthResponse(success: false, message: e.toString());
     }
-
   }
 
   Future<AuthResponse> login({
@@ -48,10 +40,7 @@ class AuthService {
       final response = await http.post(
         Uri.parse("$baseUrl/api/login"),
         headers: {"Content-Type": "application/json"},
-        body: jsonEncode({
-          "email": email,
-          "password": password,
-        }),
+        body: jsonEncode({"email": email, "password": password}),
       );
 
       final data = jsonDecode(response.body);
@@ -63,12 +52,10 @@ class AuthService {
       }
     } catch (e) {
       print("AUTH ERROR: $e");
-      return AuthResponse(
-        success: false,
-        message: e.toString(),
-      );
+      return AuthResponse(success: false, message: e.toString());
     }
   }
+
   Future<Map<String, dynamic>> getUserInfo(String userId) async {
     final prefs = await SharedPreferences.getInstance();
     final token = prefs.getString("token");
@@ -84,8 +71,7 @@ class AuthService {
     return jsonDecode(response.body);
   }
 
-  Future<Map<String, dynamic>> updateProfile(
-      String name, String email) async {
+  Future<Map<String, dynamic>> updateProfile(String name, String email) async {
     final prefs = await SharedPreferences.getInstance();
     final token = prefs.getString("token");
 
@@ -102,7 +88,9 @@ class AuthService {
   }
 
   Future<Map<String, dynamic>> changePassword(
-      String oldPassword, String newPassword) async {
+    String oldPassword,
+    String newPassword,
+  ) async {
     final prefs = await SharedPreferences.getInstance();
     final token = prefs.getString("token");
 

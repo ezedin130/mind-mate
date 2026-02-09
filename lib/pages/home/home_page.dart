@@ -32,6 +32,7 @@ class _HomePageState extends State<HomePage> {
     });
     loadNameFromToken();
   }
+
   Future<String> getUserNameFromToken() async {
     final prefs = await SharedPreferences.getInstance();
     final token = prefs.getString("token");
@@ -40,6 +41,7 @@ class _HomePageState extends State<HomePage> {
     final decodedToken = JwtDecoder.decode(token);
     return decodedToken['name'] ?? "User";
   }
+
   void loadNameFromToken() async {
     final userName = await getUserNameFromToken();
     setState(() {
@@ -50,7 +52,8 @@ class _HomePageState extends State<HomePage> {
   void _getRandomQuote() {
     final random = Random();
     setState(() {
-      currentQuote = mentalHealthQuotes[random.nextInt(mentalHealthQuotes.length)];
+      currentQuote =
+          mentalHealthQuotes[random.nextInt(mentalHealthQuotes.length)];
     });
   }
 
@@ -60,22 +63,22 @@ class _HomePageState extends State<HomePage> {
     super.dispose();
   }
 
-  void _onNavBarPresses(int index){
+  void _onNavBarPresses(int index) {
     setState(() {
       _selectedIndex = index;
     });
   }
+
   static final List<Widget> _screens = <Widget>[
     HomeSection(),
     MainGridSection(),
-    ProfileSection()
+    ProfileSection(),
   ];
-
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFF1E4957),
+      backgroundColor: const Color.fromARGB(255, 228, 102, 6),
       body: SafeArea(
         child: Stack(
           children: [
@@ -173,26 +176,20 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
       bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: Colors.white,
-        selectedItemColor: const Color(0xFF1E4957),
-        unselectedItemColor: Colors.grey,
+        backgroundColor: Color.fromARGB(255, 239, 149, 53),
+        selectedItemColor: const Color.fromARGB(255, 0, 0, 0),
+        unselectedItemColor: const Color.fromARGB(255, 255, 255, 255),
         items: const [
-          BottomNavigationBarItem(
-              icon: Icon(Icons.home),
-              label: 'Home'),
+          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
           BottomNavigationBarItem(
             icon: Icon(Icons.grid_view_rounded),
             label: 'Explore',
           ),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.person),
-              label: 'Profile'),
+          BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
         ],
         currentIndex: _selectedIndex,
         onTap: _onNavBarPresses,
-
       ),
     );
   }
- }
-
+}

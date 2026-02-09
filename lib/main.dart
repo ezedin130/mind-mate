@@ -4,23 +4,21 @@ import 'package:device_preview/device_preview.dart';
 import 'package:mindmate/pages/auth/login_page.dart';
 import 'package:mindmate/pages/auth/register_page.dart';
 import 'package:mindmate/pages/home/home_page.dart';
+
 void main() => runApp(
-  DevicePreview(
-    enabled: !kReleaseMode,
-    builder: (context) => MyApp(),
-  ),
+  DevicePreview(enabled: !kReleaseMode, builder: (context) => MyApp()),
 );
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
-  
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       locale: DevicePreview.locale(context),
       builder: DevicePreview.appBuilder,
-      home: const LoginPage(),
+      home: const RegisterPage(),
     );
   }
 }

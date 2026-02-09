@@ -13,12 +13,9 @@ class MainGridSection extends StatelessWidget {
     return Expanded(
       child: Container(
         width: double.infinity,
-        padding: const EdgeInsets.symmetric(
-          horizontal: 25,
-          vertical: 30,
-        ),
+        padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 30),
         decoration: const BoxDecoration(
-          color: Colors.white,
+          color: Color.fromARGB(255, 239, 149, 53),
           borderRadius: BorderRadius.only(
             topLeft: Radius.circular(40),
             topRight: Radius.circular(40),
@@ -31,49 +28,41 @@ class MainGridSection extends StatelessWidget {
           children: [
             CustomCardBuilder(
               title: 'Resource',
-              color: Color(0xFF4EB3E8),
-              onTap: (){
+              color: const Color.fromARGB(255, 21, 23, 186),
+              onTap: () {
                 Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => ResourcePage(),
-                    ),
+                  context,
+                  MaterialPageRoute(builder: (context) => ResourcePage()),
                 );
               },
             ),
             CustomCardBuilder(
               title: 'Chatbot',
-              color: Color(0xFF4B7E6E),
-              onTap: (){
+              color: Color.fromARGB(255, 21, 23, 186),
+              onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(
-                      builder: (context)=> ChatBotPage(),
-                ),
+                  MaterialPageRoute(builder: (context) => ChatBotPage()),
                 );
-              }
+              },
             ),
             CustomCardBuilder(
               title: 'Guided Activity',
-              color: Color(0xFF556C79),
-              onTap: (){
+              color: Color.fromARGB(255, 21, 23, 186),
+              onTap: () {
                 Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => GuidedActivityPage(),
-                    ),
+                  context,
+                  MaterialPageRoute(builder: (context) => GuidedActivityPage()),
                 );
               },
             ),
             CustomCardBuilder(
               title: 'Mood Tracker',
-              color: Color(0xFF6C627D),
-              onTap: (){
+              color: Color.fromARGB(255, 21, 23, 186),
+              onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(
-                    builder: (context)=> MoodTrackerPage(),
-                  ),
+                  MaterialPageRoute(builder: (context) => MoodTrackerPage()),
                 );
               },
             ),

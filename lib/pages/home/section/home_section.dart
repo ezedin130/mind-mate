@@ -51,7 +51,6 @@ class _HomeSectionState extends State<HomeSection> {
     }
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Expanded(
@@ -59,7 +58,7 @@ class _HomeSectionState extends State<HomeSection> {
         width: double.infinity,
         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
         decoration: const BoxDecoration(
-          color: Colors.white,
+          color: Color.fromARGB(255, 239, 149, 53),
           borderRadius: BorderRadius.only(
             topLeft: Radius.circular(40),
             topRight: Radius.circular(40),
@@ -70,8 +69,8 @@ class _HomeSectionState extends State<HomeSection> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               _loadingRecentMoods || _streak == null
-              ? const Center(child: CircularProgressIndicator())
-              : dayStreakWidget(streak: _streak!),
+                  ? const Center(child: CircularProgressIndicator())
+                  : dayStreakWidget(streak: _streak!),
               const SizedBox(height: 20),
               _buildRecentCheckins(),
               const SizedBox(height: 20),
@@ -82,11 +81,15 @@ class _HomeSectionState extends State<HomeSection> {
                   padding: const EdgeInsets.all(16),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(16),
-                    gradient: const LinearGradient(
-                      colors: [Color(0xFF00B3B8), Color(0xFF009CA6)],
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
-                    ),
+                    // gradient: const LinearGradient(
+                    //   colors: [
+                    //     Color.fromARGB(255, 21, 23, 186),
+                    //     Color.fromARGB(255, 21, 23, 186),
+                    //   ],
+                    //   begin: Alignment.topLeft,
+                    //   end: Alignment.bottomRight,
+                    // ),
+                    color: Color.fromARGB(255, 21, 23, 186),
                   ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -109,8 +112,8 @@ class _HomeSectionState extends State<HomeSection> {
                       const SizedBox(height: 12),
                       Text(
                         '"Remember: Progress is not about being perfect. '
-                            'It is about showing up, even on the tough days. '
-                            'You are doing great"',
+                        'It is about showing up, even on the tough days. '
+                        'You are doing great"',
                         style: GoogleFonts.lato(
                           color: Colors.white,
                           fontSize: 14,
@@ -120,7 +123,7 @@ class _HomeSectionState extends State<HomeSection> {
                     ],
                   ),
                 ),
-              )
+              ),
             ],
           ),
         ),
@@ -146,15 +149,15 @@ class _HomeSectionState extends State<HomeSection> {
           _loadingRecentMoods
               ? const Center(child: CircularProgressIndicator())
               : ListView.builder(
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            itemCount: _recentMoods.length,
-            itemBuilder: (context, index) {
-              final mood = _recentMoods[index];
-              final label = moodController.mapDateToLabel(mood.date);
-              return _buildCheckinItem(label, mood.mood);
-            },
-          ),
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  itemCount: _recentMoods.length,
+                  itemBuilder: (context, index) {
+                    final mood = _recentMoods[index];
+                    final label = moodController.mapDateToLabel(mood.date);
+                    return _buildCheckinItem(label, mood.mood);
+                  },
+                ),
         ],
       ),
     );
@@ -252,10 +255,7 @@ class _HomeSectionState extends State<HomeSection> {
                   const SizedBox(height: 8),
                   Text(
                     "Amazing! You've checked in for consecutive days. Keep it going! 🔥",
-                    style: GoogleFonts.lato(
-                      color: Colors.white,
-                      fontSize: 13,
-                    ),
+                    style: GoogleFonts.lato(color: Colors.white, fontSize: 13),
                   ),
                 ],
               ),

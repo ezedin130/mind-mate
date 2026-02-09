@@ -13,12 +13,9 @@ class ProfileSection extends StatelessWidget {
     return Expanded(
       child: Container(
         width: double.infinity,
-        padding: const EdgeInsets.symmetric(
-          horizontal: 25,
-          vertical: 30,
-        ),
+        padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 30),
         decoration: const BoxDecoration(
-          color: Colors.white,
+          color: Color.fromARGB(255, 239, 149, 53),
           borderRadius: BorderRadius.only(
             topLeft: Radius.circular(40),
             topRight: Radius.circular(40),
@@ -31,38 +28,39 @@ class ProfileSection extends StatelessWidget {
               child: Column(
                 children: [
                   ReUsableProfileOption(
-                      icon: Icons.edit,
-                      title: 'Edit Profile',
+                    icon: Icons.edit,                    
+                    title: 'Edit Profile',
                     onTap: () async {
                       // open dialog to edit
                       await showDialog(
                         context: context,
-                        builder: (_) => EditProfileDialog(context,authController),
+                        builder: (_) =>
+                            EditProfileDialog(context, authController),
                       );
                     },
                   ),
                   ReUsableProfileOption(
-                      icon: Icons.lock,
-                      title: 'Change Password',
-                      onTap: () async {
-                        await showDialog(
-                          context: context,
-                          builder: (_) =>
-                              ChangePasswordDialog(context,authController),
-                        );
-                      }
+                    icon: Icons.lock,
+                    title: 'Change Password',
+                    onTap: () async {
+                      await showDialog(
+                        context: context,
+                        builder: (_) =>
+                            ChangePasswordDialog(context, authController),
+                      );
+                    },
                   ),
                   ReUsableProfileOption(
-                        icon: Icons.logout,
-                        title: 'Log Out',
-                        onTap: () async {
-                        await authController.logout();
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (_) => const LoginPage()),
-                        );
-                        },
-                        ),
+                    icon: Icons.logout,
+                    title: 'Log Out',
+                    onTap: () async {
+                      await authController.logout();
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (_) => const LoginPage()),
+                      );
+                    },
+                  ),
                 ],
               ),
             ),
@@ -71,7 +69,11 @@ class ProfileSection extends StatelessWidget {
       ),
     );
   }
-  Widget EditProfileDialog(BuildContext context, AuthController authController) {
+
+  Widget EditProfileDialog(
+    BuildContext context,
+    AuthController authController,
+  ) {
     final nameController = TextEditingController();
     final emailController = TextEditingController();
     bool loading = false;
@@ -98,28 +100,35 @@ class ProfileSection extends StatelessWidget {
               onPressed: loading
                   ? null
                   : () async {
-                final name = nameController.text.trim();
-                final email = emailController.text.trim();
-                if (name.isEmpty || email.isEmpty) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text("All fields are required")),
-                  );
-                  return;
-                }
-                setState(() => loading = true);
-                try {
-                  final res = await authController.updateProfile(name, email);
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text(res['message'] ?? 'Profile updated')),
-                  );
-                  if (res['user'] != null) Navigator.pop(context);
-                } catch (e) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text("Error: $e")),
-                  );
-                }
-                setState(() => loading = false);
-              },
+                      final name = nameController.text.trim();
+                      final email = emailController.text.trim();
+                      if (name.isEmpty || email.isEmpty) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text("All fields are required"),
+                          ),
+                        );
+                        return;
+                      }
+                      setState(() => loading = true);
+                      try {
+                        final res = await authController.updateProfile(
+                          name,
+                          email,
+                        );
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text(res['message'] ?? 'Profile updated'),
+                          ),
+                        );
+                        if (res['user'] != null) Navigator.pop(context);
+                      } catch (e) {
+                        ScaffoldMessenger.of(
+                          context,
+                        ).showSnackBar(SnackBar(content: Text("Error: $e")));
+                      }
+                      setState(() => loading = false);
+                    },
               child: loading
                   ? const CircularProgressIndicator()
                   : const Text("Save"),
@@ -129,7 +138,11 @@ class ProfileSection extends StatelessWidget {
       },
     );
   }
-  Widget ChangePasswordDialog(BuildContext context, AuthController authController) {
+
+  Widget ChangePasswordDialog(
+    BuildContext context,
+    AuthController authController,
+  ) {
     final oldPasswordController = TextEditingController();
     final newPasswordController = TextEditingController();
     final confirmPasswordController = TextEditingController();
@@ -154,7 +167,9 @@ class ProfileSection extends StatelessWidget {
               ),
               TextField(
                 controller: confirmPasswordController,
-                decoration: const InputDecoration(labelText: "Confirm New Password"),
+                decoration: const InputDecoration(
+                  labelText: "Confirm New Password",
+                ),
                 obscureText: true,
               ),
             ],
@@ -164,37 +179,48 @@ class ProfileSection extends StatelessWidget {
               onPressed: loading
                   ? null
                   : () async {
-                final oldPass = oldPasswordController.text.trim();
-                final newPass = newPasswordController.text.trim();
-                final confirmPass = confirmPasswordController.text.trim();
+                      final oldPass = oldPasswordController.text.trim();
+                      final newPass = newPasswordController.text.trim();
+                      final confirmPass = confirmPasswordController.text.trim();
 
-                if (oldPass.isEmpty || newPass.isEmpty || confirmPass.isEmpty) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text("All fields are required")),
-                  );
-                  return;
-                }
-                if (newPass != confirmPass) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text("New passwords do not match")),
-                  );
-                  return;
-                }
+                      if (oldPass.isEmpty ||
+                          newPass.isEmpty ||
+                          confirmPass.isEmpty) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text("All fields are required"),
+                          ),
+                        );
+                        return;
+                      }
+                      if (newPass != confirmPass) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text("New passwords do not match"),
+                          ),
+                        );
+                        return;
+                      }
 
-                setState(() => loading = true);
-                try {
-                  final res = await authController.changePassword(oldPass, newPass);
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text(res['message'] ?? 'Password changed')),
-                  );
-                  if (res['message'] != null) Navigator.pop(context);
-                } catch (e) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text("Error: $e")),
-                  );
-                }
-                setState(() => loading = false);
-              },
+                      setState(() => loading = true);
+                      try {
+                        final res = await authController.changePassword(
+                          oldPass,
+                          newPass,
+                        );
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text(res['message'] ?? 'Password changed'),
+                          ),
+                        );
+                        if (res['message'] != null) Navigator.pop(context);
+                      } catch (e) {
+                        ScaffoldMessenger.of(
+                          context,
+                        ).showSnackBar(SnackBar(content: Text("Error: $e")));
+                      }
+                      setState(() => loading = false);
+                    },
               child: loading
                   ? const CircularProgressIndicator()
                   : const Text("Change"),
