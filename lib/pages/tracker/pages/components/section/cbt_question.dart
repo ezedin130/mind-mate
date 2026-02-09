@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-
-import '../../mood/history/mood_history_page.dart';
 import '../../mood/mood_questionnaire_page.dart';
 
 class CbtQuestion extends StatefulWidget {
@@ -85,46 +83,8 @@ class _CbtQuestionState extends State<CbtQuestion> {
                           ),
                         ),
                       ),
-                      const SizedBox(height: 20),
-                      ElevatedButton.icon(
-                        icon: const Icon(Icons.insights, size: 26),
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.blueGrey,
-                          elevation: 5,
-                          minimumSize: const Size(double.infinity, 55),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(16),
-                            side: const BorderSide(color: Colors.white24),
-                          ),
-                        ),
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (_) => const MoodHistoryPage()),
-                          );
-                        },
-                        label: Text(
-                          "View Thought Patterns",
-                          style: GoogleFonts.lato(
-                            fontSize: 20,
-                            fontWeight: FontWeight.w600,
-                            color: Colors.white,
-                          ),
-                        ),
-                      ),
                     ],
                   ),
-                ),
-                const SizedBox(height: 50),
-                Text(
-                  "“Your thoughts create your reality. Choose thoughts that serve your wellbeing.”",
-                  style: GoogleFonts.lato(
-                    fontSize: 16,
-                    color: Colors.white60,
-                    fontStyle: FontStyle.italic,
-                  ),
-                  textAlign: TextAlign.center,
                 ),
               ],
             ),

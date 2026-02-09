@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:mindmate/controller/auth_controller.dart';
+import 'package:mindmate/pages/auth/login_page.dart';
 
 import '../../../util/custom_info_tile.dart';
 import '../../../util/reusable_profile_option.dart';
 
 class ProfileSection extends StatelessWidget {
-  const ProfileSection({super.key});
+  final AuthController authController = AuthController();
 
   @override
   Widget build(BuildContext context) {
@@ -25,44 +27,181 @@ class ProfileSection extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Container(
-              width: double.infinity,
-              padding: EdgeInsets.symmetric(vertical: 18, horizontal: 10),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(20),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black12,
-                    blurRadius: 8,
-                    offset: Offset(0, 4),
-                  ),
-                ],
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  CustomInfoTile(icon: Icons.mood, label: 'Mood Entries', value: '24', color: Colors.lightBlueAccent),
-                  CustomInfoTile(icon: Icons.chat_bubble_outline, label: 'AI Chats', value: '132', color: Colors.teal),
-                  CustomInfoTile(icon: Icons.local_fire_department, label: 'Streak', value: '7 Days', color: Colors.red),
-                ],
-              ),
-            ),
-            const SizedBox(height: 30),
             Expanded(
-              child: ListView(
+              child: Column(
                 children: [
-                  ReUsableProfileOption(icon: Icons.edit, title: 'Edit Profile', onTap: () {}),
-                  ReUsableProfileOption(icon: Icons.settings, title: 'Settings', onTap: () {}),
-                  ReUsableProfileOption(icon: Icons.lock, title: 'Change Password', onTap: () {}),
-                  ReUsableProfileOption(icon: Icons.help, title: 'Help & Support', onTap: () {}),
-                  ReUsableProfileOption(icon: Icons.logout, title: 'Log Out', onTap: () {}),
+                  ReUsableProfileOption(
+                      icon: Icons.edit,
+                      title: 'Edit Profile',
+                    onTap: () async {
+                      // open dialog to edit
+                      await showDialog(
+                        context: context,
+                        builder: (_) => EditProfileDialog(context,authController),
+                      );
+                    },
+                  ),
+                  ReUsableProfileOption(
+                      icon: Icons.lock,
+                      title: 'Change Password',
+                      onTap: () async {
+                        await showDialog(
+                          context: context,
+                          builder: (_) =>
+                              ChangePasswordDialog(context,authController),
+                        );
+                      }
+                  ),
+                  ReUsableProfileOption(
+                        icon: Icons.logout,
+                        title: 'Log Out',
+                        onTap: () async {
+                        await authController.logout();
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (_) => const LoginPage()),
+                        );
+                        },
+                        ),
                 ],
               ),
             ),
           ],
         ),
       ),
+    );
+  }
+  Widget EditProfileDialog(BuildContext context, AuthController authController) {
+    final nameController = TextEditingController();
+    final emailController = TextEditingController();
+    bool loading = false;
+
+    return StatefulBuilder(
+      builder: (context, setState) {
+        return AlertDialog(
+          title: const Text("Edit Profile"),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              TextField(
+                controller: nameController,
+                decoration: const InputDecoration(labelText: "Name"),
+              ),
+              TextField(
+                controller: emailController,
+                decoration: const InputDecoration(labelText: "Email"),
+              ),
+            ],
+          ),
+          actions: [
+            TextButton(
+              onPressed: loading
+                  ? null
+                  : () async {
+                final name = nameController.text.trim();
+                final email = emailController.text.trim();
+                if (name.isEmpty || email.isEmpty) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text("All fields are required")),
+                  );
+                  return;
+                }
+                setState(() => loading = true);
+                try {
+                  final res = await authController.updateProfile(name, email);
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text(res['message'] ?? 'Profile updated')),
+                  );
+                  if (res['user'] != null) Navigator.pop(context);
+                } catch (e) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text("Error: $e")),
+                  );
+                }
+                setState(() => loading = false);
+              },
+              child: loading
+                  ? const CircularProgressIndicator()
+                  : const Text("Save"),
+            ),
+          ],
+        );
+      },
+    );
+  }
+  Widget ChangePasswordDialog(BuildContext context, AuthController authController) {
+    final oldPasswordController = TextEditingController();
+    final newPasswordController = TextEditingController();
+    final confirmPasswordController = TextEditingController();
+    bool loading = false;
+
+    return StatefulBuilder(
+      builder: (context, setState) {
+        return AlertDialog(
+          title: const Text("Change Password"),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              TextField(
+                controller: oldPasswordController,
+                decoration: const InputDecoration(labelText: "Old Password"),
+                obscureText: true,
+              ),
+              TextField(
+                controller: newPasswordController,
+                decoration: const InputDecoration(labelText: "New Password"),
+                obscureText: true,
+              ),
+              TextField(
+                controller: confirmPasswordController,
+                decoration: const InputDecoration(labelText: "Confirm New Password"),
+                obscureText: true,
+              ),
+            ],
+          ),
+          actions: [
+            TextButton(
+              onPressed: loading
+                  ? null
+                  : () async {
+                final oldPass = oldPasswordController.text.trim();
+                final newPass = newPasswordController.text.trim();
+                final confirmPass = confirmPasswordController.text.trim();
+
+                if (oldPass.isEmpty || newPass.isEmpty || confirmPass.isEmpty) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text("All fields are required")),
+                  );
+                  return;
+                }
+                if (newPass != confirmPass) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text("New passwords do not match")),
+                  );
+                  return;
+                }
+
+                setState(() => loading = true);
+                try {
+                  final res = await authController.changePassword(oldPass, newPass);
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text(res['message'] ?? 'Password changed')),
+                  );
+                  if (res['message'] != null) Navigator.pop(context);
+                } catch (e) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text("Error: $e")),
+                  );
+                }
+                setState(() => loading = false);
+              },
+              child: loading
+                  ? const CircularProgressIndicator()
+                  : const Text("Change"),
+            ),
+          ],
+        );
+      },
     );
   }
 }
