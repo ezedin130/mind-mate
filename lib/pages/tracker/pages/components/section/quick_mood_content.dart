@@ -38,7 +38,9 @@ class _QuickMoodContentState extends State<QuickMoodContent> {
       });
       final streak = await moodController.getStreak(userId);
       final average = await moodController.getWeeklyAverage(userId);
-      final averageMoodString = moodController.mapScoreToMood(average.averageScore);
+      final averageMoodString = moodController.mapScoreToMood(
+        average.averageScore,
+      );
 
       setState(() {
         _streak = streak.streak;
@@ -48,16 +50,9 @@ class _QuickMoodContentState extends State<QuickMoodContent> {
     }
   }
 
-
-
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        _buildMoodSelection(),
-        _buildWeeklyInsights(),
-      ],
-    );
+    return Column(children: [_buildMoodSelection(), _buildWeeklyInsights()]);
   }
 
   Widget _buildMoodSelection() {
@@ -69,7 +64,7 @@ class _QuickMoodContentState extends State<QuickMoodContent> {
           Container(
             padding: EdgeInsets.all(16),
             decoration: BoxDecoration(
-              color: Colors.white,
+              color: Color.fromARGB(255, 255, 255, 255),
               borderRadius: BorderRadius.circular(20),
               boxShadow: [
                 BoxShadow(
@@ -101,35 +96,36 @@ class _QuickMoodContentState extends State<QuickMoodContent> {
                   ],
                 ),
                 const SizedBox(height: 20),
-                  Center(
-                    child: ElevatedButton(
-                      onPressed: (_selectedMood != null && _userId != null)
-                        ?() async {
-                        final result =
-                        await moodController.submitMood(_userId!, _selectedMood!);
+                Center(
+                  child: ElevatedButton(
+                    onPressed: (_selectedMood != null && _userId != null)
+                        ? () async {
+                            final result = await moodController.submitMood(
+                              _userId!,
+                              _selectedMood!,
+                            );
 
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(content: Text(result.message)),
-                        );
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(content: Text(result.message)),
+                            );
 
-                        if (result.success) {
-                          setState(() => _selectedMood = null);
-                        }
-                      }
-                      :null,
-                      child: Text("Confirm Mood"),
-                    ),
+                            if (result.success) {
+                              setState(() => _selectedMood = null);
+                            }
+                          }
+                        : null,
+                    child: Text("Confirm Mood"),
                   ),
+                ),
               ],
             ),
           ),
-
         ],
       ),
     );
   }
 
-//quick mood
+  //quick mood
   Widget _buildMoodOption(String label, String emoji) {
     bool isSelected = _selectedMood == label;
     return GestureDetector(
@@ -144,36 +140,32 @@ class _QuickMoodContentState extends State<QuickMoodContent> {
             width: 50,
             height: 50,
             decoration: BoxDecoration(
-              color: isSelected ? Colors.blue : Colors.grey[100],
+              color: isSelected
+                  ? const Color.fromARGB(255, 0, 48, 239)
+                  : Colors.grey,
               borderRadius: BorderRadius.circular(12),
             ),
             child: Center(
-              child: Text(
-                emoji,
-                style: const TextStyle(fontSize: 24),
-              ),
+              child: Text(emoji, style: const TextStyle(fontSize: 24)),
             ),
           ),
           const SizedBox(height: 8),
           Text(
             label,
-            style: GoogleFonts.lato(
-              fontSize: 12,
-              color: Colors.black54,
-            ),
+            style: GoogleFonts.lato(fontSize: 12, color: Colors.black54),
           ),
         ],
       ),
     );
   }
 
-//quick mood
+  //quick mood
   Widget _buildWeeklyInsights() {
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 24),
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: const Color(0xFFF8F9FA),
+        color: Color.fromARGB(255, 255, 255, 255),
         borderRadius: BorderRadius.circular(12),
       ),
       child: Column(
@@ -191,37 +183,34 @@ class _QuickMoodContentState extends State<QuickMoodContent> {
           _loadingInsights
               ? const Center(child: CircularProgressIndicator())
               : Row(
-            children: [
-              Expanded(
-                child: _buildInsightItem(
-                  "Average Mood",
-                  _averageMood ?? "N/A",
+                  children: [
+                    Expanded(
+                      child: _buildInsightItem(
+                        "Average Mood",
+                        _averageMood ?? "N/A",
+                      ),
+                    ),
+                    Expanded(
+                      child: _buildInsightItem(
+                        "Check-in Streak",
+                        _streak != null ? "$_streak days" : "N/A",
+                      ),
+                    ),
+                  ],
                 ),
-              ),
-              Expanded(
-                child: _buildInsightItem(
-                  "Check-in Streak",
-                  _streak != null ? "$_streak days" : "N/A",
-                ),
-              ),
-            ],
-          ),
         ],
       ),
     );
   }
 
-//quick mood
+  //quick mood
   Widget _buildInsightItem(String title, String value) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
           title,
-          style: GoogleFonts.lato(
-            fontSize: 14,
-            color: Colors.black54,
-          ),
+          style: GoogleFonts.lato(fontSize: 14, color: Colors.black54),
         ),
         const SizedBox(height: 4),
         Text(
@@ -235,6 +224,4 @@ class _QuickMoodContentState extends State<QuickMoodContent> {
       ],
     );
   }
-
-
 }

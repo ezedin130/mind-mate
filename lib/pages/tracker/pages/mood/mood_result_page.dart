@@ -5,13 +5,17 @@ import 'package:mindmate/pages/tracker/mood_tracker_page.dart';
 class MoodResultPage extends StatelessWidget {
   final String mood;
   final String suggestion;
-  const MoodResultPage({super.key, required this.mood, required this.suggestion});
+  const MoodResultPage({
+    super.key,
+    required this.mood,
+    required this.suggestion,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: const Color(0xFF1E4957),
+        backgroundColor: const Color.fromARGB(255, 22, 132, 222),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () {
@@ -23,7 +27,7 @@ class MoodResultPage extends StatelessWidget {
         ),
       ),
 
-      backgroundColor: const Color(0xFF1E4957),
+      backgroundColor: const Color.fromARGB(255, 22, 132, 222),
       body: Center(
         child: Padding(
           padding: const EdgeInsets.all(24.0),
@@ -42,20 +46,17 @@ class MoodResultPage extends StatelessWidget {
               const SizedBox(height: 20),
               Text(
                 suggestion,
-                style: GoogleFonts.lato(
-                  fontSize: 18,
-                  color: Colors.white70,
-                ),
+                style: GoogleFonts.lato(fontSize: 18, color: Colors.white70),
                 textAlign: TextAlign.center,
               ),
               const SizedBox(height: 40),
               ElevatedButton(
                 onPressed: () => Navigator.push(
-                    context,
-                    MaterialPageRoute(builder:
-                        (context)=> MoodTrackerPage())),
+                  context,
+                  MaterialPageRoute(builder: (context) => MoodTrackerPage()),
+                ),
                 child: const Text("Go Back"),
-              )
+              ),
             ],
           ),
         ),

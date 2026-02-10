@@ -53,7 +53,10 @@ class _BreathingExercisePageState extends State<BreathingExercisePage>
       CurvedAnimation(parent: _animController, curve: Curves.easeInOut),
     );
 
-    _holdController = AnimationController(vsync: this, duration: const Duration(seconds: 1));
+    _holdController = AnimationController(
+      vsync: this,
+      duration: const Duration(seconds: 1),
+    );
 
     _resetToIdle();
     _animController.value = 0.5;
@@ -128,8 +131,10 @@ class _BreathingExercisePageState extends State<BreathingExercisePage>
         _isPaused = false;
       });
       _sessionStopwatch.start();
-      _sessionTimer ??=
-          Timer.periodic(const Duration(seconds: 1), (_) => setState(() {}));
+      _sessionTimer ??= Timer.periodic(
+        const Duration(seconds: 1),
+        (_) => setState(() {}),
+      );
       _startPhaseTimer();
       _startPhaseAnimation();
     } else {
@@ -195,7 +200,9 @@ class _BreathingExercisePageState extends State<BreathingExercisePage>
         duration: const Duration(milliseconds: 400),
         curve: Curves.easeInOut,
       );
-      _holdController.duration = Duration(seconds: _phaseDurations[BreathPhase.hold]!);
+      _holdController.duration = Duration(
+        seconds: _phaseDurations[BreathPhase.hold]!,
+      );
       _holdController.reset();
       _holdController.forward();
     } else if (_phase == BreathPhase.exhale) {
@@ -249,8 +256,10 @@ class _BreathingExercisePageState extends State<BreathingExercisePage>
             Column(
               children: [
                 Padding(
-                  padding:
-                  const EdgeInsets.symmetric(horizontal: 16, vertical: 18),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 16,
+                    vertical: 18,
+                  ),
                   child: Row(
                     children: [
                       Expanded(
@@ -298,15 +307,25 @@ class _BreathingExercisePageState extends State<BreathingExercisePage>
                           width: 260,
                           height: 260,
                           child: AnimatedBuilder(
-                            animation: Listenable.merge([_animController, _holdController]),
+                            animation: Listenable.merge([
+                              _animController,
+                              _holdController,
+                            ]),
                             builder: (context, child) {
                               final fill = _fillScaleAnim.value; // 0.18..1.0
-                              final centerScale = _centerScaleAnim.value; // 0.85..1.15
+                              final centerScale =
+                                  _centerScaleAnim.value; // 0.85..1.15
                               final outerSize = 260.0;
                               final outerRadius = outerSize / 2;
-                              final fillSize = (outerRadius * 2) * fill; // circle that fills from center
+                              final fillSize =
+                                  (outerRadius * 2) *
+                                  fill; // circle that fills from center
                               final fillRadius = fillSize / 2;
-                              final outerOpacity = lerpDouble(0.12, 0.28, 1.0 - fill)!;
+                              final outerOpacity = lerpDouble(
+                                0.12,
+                                0.28,
+                                1.0 - fill,
+                              )!;
 
                               return Stack(
                                 alignment: Alignment.center,
@@ -318,7 +337,9 @@ class _BreathingExercisePageState extends State<BreathingExercisePage>
                                       shape: BoxShape.circle,
                                       gradient: RadialGradient(
                                         colors: [
-                                          Colors.deepPurple.withOpacity(outerOpacity),
+                                          Colors.deepPurple.withOpacity(
+                                            outerOpacity,
+                                          ),
                                           Colors.transparent,
                                         ],
                                         stops: const [0.5, 1.0],
@@ -332,7 +353,9 @@ class _BreathingExercisePageState extends State<BreathingExercisePage>
                                       shape: BoxShape.circle,
                                       gradient: RadialGradient(
                                         colors: [
-                                          Colors.pink.withOpacity(0.10 + (fill * 0.1)),
+                                          Colors.pink.withOpacity(
+                                            0.10 + (fill * 0.1),
+                                          ),
                                           Colors.deepPurple.withOpacity(0.03),
                                         ],
                                       ),
@@ -346,8 +369,12 @@ class _BreathingExercisePageState extends State<BreathingExercisePage>
                                         shape: BoxShape.circle,
                                         gradient: RadialGradient(
                                           colors: [
-                                            const Color(0xFFFFD5F2).withOpacity(0.95 * fill),
-                                            const Color(0xFFFFB2DB).withOpacity(0.95 * fill),
+                                            const Color(
+                                              0xFFFFD5F2,
+                                            ).withOpacity(0.95 * fill),
+                                            const Color(
+                                              0xFFFFB2DB,
+                                            ).withOpacity(0.95 * fill),
                                           ],
                                           stops: const [0.0, 1.0],
                                         ),
@@ -364,9 +391,12 @@ class _BreathingExercisePageState extends State<BreathingExercisePage>
                                   Transform.scale(
                                     scale: centerScale,
                                     child: _BreathingMainCircle(
-                                      centerNumber:
-                                      _isRunning ? '$_remaining' : '${_phaseDurations[BreathPhase.inhale]}',
-                                      centerLabel: _isRunning ? _phaseLabel : 'Breathe In',
+                                      centerNumber: _isRunning
+                                          ? '$_remaining'
+                                          : '${_phaseDurations[BreathPhase.inhale]}',
+                                      centerLabel: _isRunning
+                                          ? _phaseLabel
+                                          : 'Breathe In',
                                     ),
                                   ),
                                 ],
@@ -389,15 +419,20 @@ class _BreathingExercisePageState extends State<BreathingExercisePage>
                         const SizedBox(height: 8),
                         Text(
                           'Session Time: ${_sessionTimeFormatted}',
-                          style: const TextStyle(color: Colors.white54, fontSize: 12),
+                          style: const TextStyle(
+                            color: Colors.white54,
+                            fontSize: 12,
+                          ),
                         ),
                       ],
                     ),
                   ),
                 ),
                 Padding(
-                  padding:
-                  const EdgeInsets.symmetric(horizontal: 26, vertical: 16),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 26,
+                    vertical: 16,
+                  ),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -410,7 +445,9 @@ class _BreathingExercisePageState extends State<BreathingExercisePage>
                         ),
                         onPressed: _togglePlayPause,
                         child: Icon(
-                          !_isRunning || _isPaused ? Icons.play_arrow : Icons.pause,
+                          !_isRunning || _isPaused
+                              ? Icons.play_arrow
+                              : Icons.pause,
                           color: Colors.deepPurple,
                           size: 28,
                         ),
@@ -424,16 +461,16 @@ class _BreathingExercisePageState extends State<BreathingExercisePage>
                           elevation: 0,
                         ),
                         onPressed: _resetSession,
-                        child: const Icon(
-                          Icons.refresh,
-                          color: Colors.white,
-                        ),
+                        child: const Icon(Icons.refresh, color: Colors.white),
                       ),
                     ],
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 22),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 16,
+                    vertical: 22,
+                  ),
                   child: Container(
                     width: double.infinity,
                     padding: const EdgeInsets.all(16),
@@ -451,16 +488,18 @@ class _BreathingExercisePageState extends State<BreathingExercisePage>
                             Text(
                               'Tips for Best Results',
                               style: TextStyle(
-                                  color: Colors.white, fontWeight: FontWeight.w600),
+                                color: Colors.white,
+                                fontWeight: FontWeight.w600,
+                              ),
                             ),
                           ],
                         ),
                         SizedBox(height: 8),
                         Text(
                           '• Find a comfortable seated position\n'
-                              '• Close your eyes or soften your gaze\n'
-                              '• Focus on the rhythm of your breath\n'
-                              '• Practice for 3-5 minutes daily',
+                          '• Close your eyes or soften your gaze\n'
+                          '• Focus on the rhythm of your breath\n'
+                          '• Practice for 3-5 minutes daily',
                           style: TextStyle(color: Colors.white70),
                         ),
                       ],
@@ -475,6 +514,7 @@ class _BreathingExercisePageState extends State<BreathingExercisePage>
     );
   }
 }
+
 class _BreathingMainCircle extends StatelessWidget {
   final String centerNumber;
   final String centerLabel;
@@ -519,10 +559,11 @@ class _BreathingMainCircle extends StatelessWidget {
             Text(
               centerLabel,
               style: const TextStyle(
-                  fontSize: 12,
-                  color: Colors.white70,
-                  fontWeight: FontWeight.w500),
-            )
+                fontSize: 12,
+                color: Colors.white70,
+                fontWeight: FontWeight.w500,
+              ),
+            ),
           ],
         ),
       ),
@@ -562,20 +603,22 @@ class _HoldDots extends StatelessWidget {
           final size = lerpDouble(8.0, 4.0, t)!;
           final opacity = lerpDouble(0.95, 0.35, t)!;
 
-          dots.add(Transform.translate(
-            offset: Offset(dx, dy),
-            child: Opacity(
-              opacity: opacity,
-              child: Container(
-                width: size,
-                height: size,
-                decoration: BoxDecoration(
-                  color: dotColor,
-                  shape: BoxShape.circle,
+          dots.add(
+            Transform.translate(
+              offset: Offset(dx, dy),
+              child: Opacity(
+                opacity: opacity,
+                child: Container(
+                  width: size,
+                  height: size,
+                  decoration: BoxDecoration(
+                    color: dotColor,
+                    shape: BoxShape.circle,
+                  ),
                 ),
               ),
             ),
-          ));
+          );
         }
 
         return Stack(children: dots);

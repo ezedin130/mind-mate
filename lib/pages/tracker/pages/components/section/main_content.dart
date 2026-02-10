@@ -4,10 +4,8 @@ import 'cbt_question.dart';
 import 'quick_mood_content.dart';
 
 class MainContent extends StatelessWidget {
-  const MainContent({
-    super.key,
-    required int selectedIndex,
-  }) : _selectedIndex = selectedIndex;
+  const MainContent({super.key, required int selectedIndex})
+    : _selectedIndex = selectedIndex;
 
   final int _selectedIndex;
 
@@ -15,7 +13,7 @@ class MainContent extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: const BoxDecoration(
-        color: Colors.white,
+        color: Color.fromARGB(255, 239, 149, 53),
         borderRadius: BorderRadius.only(
           topLeft: Radius.circular(24),
           topRight: Radius.circular(24),

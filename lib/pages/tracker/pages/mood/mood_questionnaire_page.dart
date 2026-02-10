@@ -23,6 +23,7 @@ class _MoodQuestionnairePageState extends State<MoodQuestionnairePage> {
       _calculateMood();
     }
   }
+
   void _calculateMood() {
     final totalScore = answers.reduce((a, b) => a + b);
     String mood;
@@ -41,10 +42,7 @@ class _MoodQuestionnairePageState extends State<MoodQuestionnairePage> {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (_) => MoodResultPage(
-          mood: mood,
-          suggestion: suggestion,
-        ),
+        builder: (_) => MoodResultPage(mood: mood, suggestion: suggestion),
       ),
     );
   }
@@ -55,13 +53,14 @@ class _MoodQuestionnairePageState extends State<MoodQuestionnairePage> {
     final progress = (currentQuestionIndex + 1) / moodQuestions.length;
 
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: const Color(0xFF1E4957),
-      ),
+      appBar: AppBar(backgroundColor: Color.fromARGB(255, 56, 67, 222)),
       body: Container(
         decoration: const BoxDecoration(
           gradient: LinearGradient(
-            colors: [Color(0xFF1E4957), Color(0xFF0D1C26)],
+            colors: [
+              Color.fromARGB(255, 56, 67, 222),
+              Color.fromARGB(255, 3, 24, 100),
+            ],
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
           ),
@@ -146,7 +145,8 @@ class _MoodQuestionnairePageState extends State<MoodQuestionnairePage> {
                               side: const BorderSide(color: Colors.white24),
                             ),
                           ),
-                          onPressed: () => _nextQuestion(question.scores[index]),
+                          onPressed: () =>
+                              _nextQuestion(question.scores[index]),
                           child: Text(
                             question.options[index],
                             style: GoogleFonts.lato(
@@ -165,7 +165,7 @@ class _MoodQuestionnairePageState extends State<MoodQuestionnairePage> {
                   child: Text(
                     "Take a deep breath 🌿",
                     style: GoogleFonts.lato(
-                      color: Colors.white54,
+                      color: const Color.fromARGB(250, 255, 255, 255),
                       fontSize: 14,
                     ),
                   ),

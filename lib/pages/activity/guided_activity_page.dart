@@ -12,9 +12,9 @@ class GuidedActivityPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFF1E4957),
+      backgroundColor: Color.fromARGB(255, 239, 149, 53),
       appBar: AppBar(
-        backgroundColor: Colors.tealAccent,
+        backgroundColor: Color.fromARGB(255, 228, 102, 6),
         title: Column(
           children: [
             Text(
@@ -25,7 +25,7 @@ class GuidedActivityPage extends StatelessWidget {
                 color: Colors.black87,
               ),
             ),
-            const SizedBox(height: 5.0,),
+            const SizedBox(height: 5.0),
             Text(
               'activities to support your wellbeing',
               style: GoogleFonts.lato(
@@ -37,52 +37,62 @@ class GuidedActivityPage extends StatelessWidget {
           ],
         ),
       ),
-      body:  Padding(
-        padding: const EdgeInsets.symmetric(vertical: 40.0,horizontal: 20.0),
+      body: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 40.0, horizontal: 20.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             ReUsableContainer(
-                context: context,
-                icon: Icons.air_outlined,
-                title: "Breathing Exercise",
-                subtitle: "calm your mind with guided breathing",
-                color: Colors.blueAccent, onTap: () {
-              Navigator.push(context, MaterialPageRoute(builder: (context)=> BreathingExercisePage()));
-            }
+              context: context,
+              icon: Icons.air_outlined,
+              title: "Breathing Exercise",
+              subtitle: "calm your mind with guided breathing",
+              color: Colors.blueAccent,
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => BreathingExercisePage(),
+                  ),
+                );
+              },
             ),
-            const SizedBox(height: 10.0,),
+            const SizedBox(height: 10.0),
             ReUsableContainer(
-                context: context,
-                icon: Icons.self_improvement,
-                title: "Meditation",
-                subtitle: "find peace in the present moment",
-                color: Colors.blueAccent, onTap: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context)=> MeditationPage()));
-            }
+              context: context,
+              icon: Icons.self_improvement,
+              title: "Meditation",
+              subtitle: "find peace in the present moment",
+              color: Colors.blueAccent,
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => MeditationPage()),
+                );
+              },
             ),
-            const SizedBox(height: 10.0,),
+            const SizedBox(height: 10.0),
             ReUsableContainer(
-                context: context,
-                icon: Icons.headset,
-                title: "Sleep Sounds",
-                subtitle: "relaxing sounds for better sleep",
-                color: Colors.blueAccent, onTap: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context)=> SleepingSoundPage()));
-            }
+              context: context,
+              icon: Icons.headset,
+              title: "Sleep Sounds",
+              subtitle: "relaxing sounds for better sleep",
+              color: Colors.blueAccent,
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => SleepingSoundPage()),
+                );
+              },
             ),
-            const SizedBox(height: 20.0,),
+            const SizedBox(height: 20.0),
             Center(
               child: Container(
                 width: 400,
                 padding: const EdgeInsets.all(16),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(16),
-                  gradient: const LinearGradient(
-                    colors: [Color(0xFFFFA726), Color(0xFFEC407A)],
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                  ),
+                  color: const Color.fromARGB(255, 3, 21, 217),
                 ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -90,10 +100,7 @@ class GuidedActivityPage extends StatelessWidget {
                   children: [
                     Row(
                       children: [
-                        Icon(
-                          Icons.favorite,
-                          color: Colors.white,
-                        ),
+                        Icon(Icons.favorite, color: Colors.white),
                         SizedBox(width: 8),
                         Text(
                           "Daily Tip",
@@ -108,8 +115,8 @@ class GuidedActivityPage extends StatelessWidget {
                     SizedBox(height: 12),
                     Text(
                       '"Take three deep breaths before responding to stress. '
-                          'This simple pause can help you respond thoughtfully '
-                          'rather than react emotionally."',
+                      'This simple pause can help you respond thoughtfully '
+                      'rather than react emotionally."',
                       style: GoogleFonts.lato(
                         color: Colors.white,
                         fontSize: 14,
@@ -119,7 +126,7 @@ class GuidedActivityPage extends StatelessWidget {
                   ],
                 ),
               ),
-            )
+            ),
           ],
         ),
       ),

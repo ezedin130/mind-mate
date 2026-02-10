@@ -15,7 +15,7 @@ class RegisterPage extends StatelessWidget {
     final emailController = TextEditingController();
     final passwordController = TextEditingController();
     return Scaffold(
-      backgroundColor: Color(0XFF088F8F),
+      backgroundColor: Color.fromARGB(255, 228, 102, 6),
       body: Form(
         key: formKey,
         child: Column(
@@ -42,7 +42,7 @@ class RegisterPage extends StatelessWidget {
                 width: 300,
                 height: 450,
                 decoration: BoxDecoration(
-                  color: const Color(0xFF3E5A66),
+                  color: Color.fromARGB(255, 239, 149, 53),
                   borderRadius: BorderRadius.circular(25),
                   boxShadow: [
                     BoxShadow(
@@ -61,7 +61,9 @@ class RegisterPage extends StatelessWidget {
                       obscure: false,
                       color: Colors.white,
                       validator: (value) {
-                        if (value == null || value.isEmpty || value.length < 4) {
+                        if (value == null ||
+                            value.isEmpty ||
+                            value.length < 4) {
                           return 'Please enter your name';
                         }
                         return null;
@@ -91,7 +93,9 @@ class RegisterPage extends StatelessWidget {
                       obscure: true,
                       color: Colors.white,
                       validator: (value) {
-                        if (value == null || value.isEmpty || value.length < 6) {
+                        if (value == null ||
+                            value.isEmpty ||
+                            value.length < 6) {
                           return 'Please enter your password';
                         }
                         return null;
@@ -115,13 +119,13 @@ class RegisterPage extends StatelessWidget {
                       height: 45,
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: const Color(0xFF4EB3E8),
+                          backgroundColor: Color.fromARGB(255, 21, 23, 186),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(25),
                           ),
                           elevation: 3,
                         ),
-                        onPressed: () async{
+                        onPressed: () async {
                           final authController = AuthController();
                           if (formKey.currentState!.validate()) {
                             final result = await authController.registerUser(
@@ -137,7 +141,9 @@ class RegisterPage extends StatelessWidget {
                             if (result.success) {
                               Navigator.pushReplacement(
                                 context,
-                                MaterialPageRoute(builder: (_) => const LoginPage()),
+                                MaterialPageRoute(
+                                  builder: (_) => const LoginPage(),
+                                ),
                               );
                             }
                           }
@@ -159,21 +165,21 @@ class RegisterPage extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Expanded(child: Divider(thickness: 0.5, color: Colors.grey[400])),
+                Expanded(child: Divider(thickness: 0.5, color: Colors.white)),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 10.0),
                   child: Text(
                     'Or continue with',
                     style: GoogleFonts.lato(
-                      color: Colors.grey[500],
+                      color: Colors.white,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
                 ),
-                Expanded(child: Divider(thickness: 0.5, color: Colors.grey[400])),
+                Expanded(child: Divider(color: Colors.white)),
               ],
             ),
-            const SizedBox(height: 10),
+            SizedBox(height: 10),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -195,7 +201,7 @@ class RegisterPage extends StatelessWidget {
                 Text(
                   'Already have an account?',
                   style: GoogleFonts.lato(
-                    color: Colors.grey[700],
+                    color: Colors.white,
                     fontSize: 14,
                     fontWeight: FontWeight.bold,
                   ),
@@ -213,7 +219,7 @@ class RegisterPage extends StatelessWidget {
                   child: Text(
                     'Login now',
                     style: GoogleFonts.lato(
-                      color: Colors.blue,
+                      color: const Color.fromARGB(255, 0, 47, 255),
                       fontSize: 14,
                       fontWeight: FontWeight.bold,
                     ),

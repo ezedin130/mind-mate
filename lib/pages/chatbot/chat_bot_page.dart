@@ -7,12 +7,10 @@ class ChatBotPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller= TextEditingController();
+    final controller = TextEditingController();
     return Scaffold(
-      backgroundColor: const Color(0xFF1E4957),
-      appBar: AppBar(
-        backgroundColor: const Color(0xFF1E4957),
-      ),
+      backgroundColor: Color.fromARGB(255, 239, 149, 53),
+      appBar: AppBar(backgroundColor: Color.fromARGB(255, 239, 149, 53)),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -21,13 +19,13 @@ class ChatBotPage extends StatelessWidget {
             child: Text(
               'How can I help?',
               style: GoogleFonts.lato(
-              fontSize: 24,
-              fontWeight: FontWeight.bold,
-              color: Colors.white,
-            ),
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+                color: Colors.white,
+              ),
             ),
           ),
-          const SizedBox(height: 20.0,),
+          const SizedBox(height: 20.0),
           Padding(
             padding: const EdgeInsets.all(15.0),
             child: Stack(
@@ -43,15 +41,12 @@ class ChatBotPage extends StatelessWidget {
                   top: 8,
                   bottom: 8,
                   child: GestureDetector(
-                    child: Icon(
-                      Icons.send,
-                      color: const Color(0xFF1E4957),
-                    ),
+                    child: Icon(Icons.send, color: const Color(0xFF1E4957)),
                   ),
-                )
+                ),
               ],
             ),
-          )
+          ),
         ],
       ),
     );

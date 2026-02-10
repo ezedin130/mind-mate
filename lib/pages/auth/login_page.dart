@@ -16,7 +16,7 @@ class LoginPage extends StatelessWidget {
     final passwordController = TextEditingController();
 
     return Scaffold(
-      backgroundColor: Color(0XFF088F8F),
+      backgroundColor: Color.fromARGB(255, 228, 102, 6),
       body: Form(
         key: formKey,
         child: Column(
@@ -43,7 +43,7 @@ class LoginPage extends StatelessWidget {
                 width: 300,
                 height: 300,
                 decoration: BoxDecoration(
-                  color: const Color(0xFF3E5A66),
+                  color: Color.fromARGB(255, 239, 149, 53),
                   borderRadius: BorderRadius.circular(25),
                   boxShadow: [
                     BoxShadow(
@@ -77,7 +77,9 @@ class LoginPage extends StatelessWidget {
                       hint: 'Password at least 6 characters',
                       controller: passwordController,
                       validator: (value) {
-                        if (value == null || value.isEmpty || value.length < 6) {
+                        if (value == null ||
+                            value.isEmpty ||
+                            value.length < 6) {
                           return 'Please enter your password';
                         }
                         return null;
@@ -91,13 +93,18 @@ class LoginPage extends StatelessWidget {
                       height: 45,
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: const Color(0xFF4EB3E8),
+                          backgroundColor: const Color.fromARGB(
+                            255,
+                            13,
+                            39,
+                            238,
+                          ),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(25),
                           ),
                           elevation: 3,
                         ),
-                        onPressed: () async{
+                        onPressed: () async {
                           final authController = AuthController();
                           if (formKey.currentState!.validate()) {
                             final result = await authController.loginUser(
@@ -110,7 +117,9 @@ class LoginPage extends StatelessWidget {
                             if (result.success) {
                               Navigator.pushReplacement(
                                 context,
-                                MaterialPageRoute(builder: (_) => const HomePage()),
+                                MaterialPageRoute(
+                                  builder: (_) => const HomePage(),
+                                ),
                               );
                             }
                           }
@@ -132,18 +141,22 @@ class LoginPage extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Expanded(child: Divider(thickness: 0.5, color: Colors.grey[400])),
+                Expanded(
+                  child: Divider(
+                    color: const Color.fromARGB(255, 255, 255, 255),
+                  ),
+                ),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 10.0),
                   child: Text(
                     'Or continue with',
                     style: GoogleFonts.lato(
-                      color: Colors.grey[500],
+                      color: Colors.white,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
                 ),
-                Expanded(child: Divider(thickness: 0.5, color: Colors.grey[400])),
+                Expanded(child: Divider(color: Colors.white)),
               ],
             ),
             const SizedBox(height: 10),
@@ -161,14 +174,14 @@ class LoginPage extends StatelessWidget {
                 ),
               ],
             ),
-            SizedBox(height: 10),
+            SizedBox(height: 15),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
                   'Not a member?',
                   style: GoogleFonts.lato(
-                    color: Colors.grey[700],
+                    color: Colors.white,
                     fontSize: 14,
                     fontWeight: FontWeight.bold,
                   ),
@@ -186,7 +199,7 @@ class LoginPage extends StatelessWidget {
                   child: Text(
                     'Register now',
                     style: GoogleFonts.lato(
-                      color: Colors.blue,
+                      color: const Color.fromARGB(255, 5, 28, 234),
                       fontSize: 14,
                       fontWeight: FontWeight.bold,
                     ),

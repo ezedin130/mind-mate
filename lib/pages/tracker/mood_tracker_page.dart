@@ -16,29 +16,49 @@ class _MoodTrackerPageState extends State<MoodTrackerPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFF1E4957),
-      body: SafeArea(
-        child: Column(
+      backgroundColor: const Color.fromARGB(255, 228, 102, 6),
+      appBar: AppBar(
+        backgroundColor: const Color.fromARGB(255, 228, 102, 6),
+        title: Column(
           children: [
-            Header(context: context),
-            _buildNavigationTabs(),
-            const SizedBox(height: 10.0,),
-            Expanded(
-              child: MainContent(selectedIndex: _selectedIndex),
+            Text(
+              'Mood Tracker',
+              style: GoogleFonts.lato(
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+                color: Colors.black87,
+              ),
+            ),
+            const SizedBox(height: 5.0),
+            Text(
+              'Track your emotional wellbeing',
+              style: GoogleFonts.lato(
+                fontSize: 15,
+                fontWeight: FontWeight.bold,
+                color: Colors.black87,
+              ),
             ),
           ],
         ),
       ),
+      body: Column(
+        children: [
+          _buildNavigationTabs(),
+          const SizedBox(height: 10.0),
+          Expanded(child: MainContent(selectedIndex: _selectedIndex)),
+        ],
+      ),
     );
   }
-//app bar
-//nav
+
+  //app bar
+  //nav
   Widget _buildNavigationTabs() {
     return Padding(
       padding: const EdgeInsets.all(15.0),
       child: Container(
         decoration: BoxDecoration(
-          color: const Color(0xFF1E4957),
+          color: Color.fromARGB(255, 239, 149, 53),
           borderRadius: BorderRadius.circular(20),
           boxShadow: [
             BoxShadow(
@@ -57,20 +77,20 @@ class _MoodTrackerPageState extends State<MoodTrackerPage> {
       ),
     );
   }
-//nav
+
+  //nav
   Widget _buildNavItem(String title, int index) {
     bool isSelected = _selectedIndex == index;
     return Expanded(
       child: Container(
         width: isSelected ? 2 : 1,
         decoration: BoxDecoration(
-          color: isSelected ? Colors.blue : Colors.transparent,
+          color: isSelected
+              ? const Color.fromARGB(255, 18, 3, 221)
+              : Colors.transparent,
           borderRadius: BorderRadius.circular(20),
           border: Border(
-            bottom: BorderSide(
-              color: Colors.white.withOpacity(0.3),
-              width: 1,
-            ),
+            bottom: BorderSide(color: Colors.white.withOpacity(0.3), width: 1),
           ),
         ),
         child: TextButton(
@@ -81,9 +101,7 @@ class _MoodTrackerPageState extends State<MoodTrackerPage> {
           },
           style: TextButton.styleFrom(
             padding: const EdgeInsets.symmetric(vertical: 16),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.zero,
-            ),
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.zero),
           ),
           child: Text(
             title,
