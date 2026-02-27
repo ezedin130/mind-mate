@@ -5,7 +5,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../model/auth_response.dart';
 
 class AuthService {
-  final String baseUrl = "http://10.172.37.40:3000";
+  final String baseUrl = "http://10.172.160.97:3000";
 
   Future<AuthResponse> register({
     required String name,
